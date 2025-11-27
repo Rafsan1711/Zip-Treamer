@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZIP ফাইল অর্গানাইজার এবং ফ্ল্যাটেনার</title>
+    
+    <!-- লাইব্রেরি ইম্পোর্ট (ইন্টারনেট কানেকশন প্রয়োজন) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #f8fafc;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: #eef2ff;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        #status {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Chart Area */
+        #chart-area {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .category-group {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            background: #f1f5f9;
+            padding: 10px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .file-list {
+            padding: 10px 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            background: #fff;
+            padding: 5px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        .file-item label {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .stats {
+            font-size: 0.9em;
+            color: #666;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ZIP ফ্ল্যাটেনার এবং অর্গানাইজার</h1>
+        
+        <!-- Upload Section -->
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <p>এখানে ক্লিক করে আপনার <strong>.zip</strong> ফাইল আপলোড করুন</p>
+            <input type="file" id="fileInput" accept=".zip">
+        </div>
+        <div id="status"></div>
+
+        <!-- Selection Chart -->
+        <div id="chart-area">
+            <h3>ফাইল সিলেকশন চার্ট (এক্সটেনশন অনুযায়ী)</h3>
+            <p style="color: #666; font-size: 14px;">নিচে ক্যাটাগরি অনুযায়ী ফাইলগুলো দেখানো হয়েছে। যেগুলো জিপে রাখতে চান না, সেগুলো আনচেক (Uncheck) করুন।</p>
+            
+            <div id="categories-container">
+                <!-- Dynamic Content Will Load Here -->
+            </div>
+
+            <div class="actions">
+                <button class="btn" id="downloadBtn" onclick="processAndDownload()">নতুন ZIP ডাউনলোড করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let originalZipFiles = {}; // Stores file data
+        let processedFiles = []; // Stores flattened list
+
+        document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+
+        async function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const status = document.getElementById('status');
+            const chartArea = document.getElementById('chart-area');
+            
+            status.textContent = "ফাইল প্রসেস করা হচ্ছে... অপেক্ষা করুন।";
+            status.style.color = "orange";
+            chartArea.style.display = 'none';
+
+            try {
+                const zip = new JSZip();
+                const content = await zip.loadAsync(file);
+                
+                originalZipFiles = content.files;
+                processedFiles = [];
+                
+                // Process and Flatten Files
+                const nameMap = new Map(); // To handle duplicate names
+
+                for (let filename in originalZipFiles) {
+                    const fileObj = originalZipFiles[filename];
+                    
+                    // Skip directories
+                    if (fileObj.dir) continue;
+
+                    // Extract base name (remove folder paths)
+                    let baseName = filename.split('/').pop();
+                    
+                    // Handle Duplicates (Rename logic)
+                    if (nameMap.has(baseName)) {
+                        let count = nameMap.get(baseName);
+                        nameMap.set(baseName, count + 1);
+                        
+                        const dotIndex = baseName.lastIndexOf('.');
+                        if (dotIndex !== -1) {
+                            baseName = baseName.substring(0, dotIndex) + `(${count})` + baseName.substring(dotIndex);
+                        } else {
+                            baseName = baseName + `(${count})`;
+                        }
+                    } else {
+                        nameMap.set(baseName, 1);
+                    }
+
+                    // Get Extension for categorization
+                    let ext = baseName.split('.').pop().toLowerCase();
+                    if (baseName.indexOf('.') === -1) ext = 'others'; // No extension
+
+                    processedFiles.push({
+                        originalPath: filename,
+                        newName: baseName,
+                        extension: ext,
+                        id: 'file-' + Math.random().toString(36).substr(2, 9)
+                    });
+                }
+
+                renderChart();
+                status.textContent = "ফাইল প্রসেসিং সম্পন্ন! নিচে থেকে অপ্রয়োজনীয় ফাইল বাদ দিয়ে ডাউনলোড করুন।";
+                status.style.color = "green";
+                chartArea.style.display = 'block';
+
+            } catch (err) {
+                console.error(err);
+                status.textContent = "এরর: ফাইলটি পড়া যাচ্ছে না। এটি সঠিক ZIP ফাইল কিনা চেক করুন।";
+                status.style.color = "red";
+            }
+        }
+
+        function renderChart() {
+            const container = document.getElementById('categories-container');
+            container.innerHTML = '';
+
+            // Group by Extension
+            const groups = processedFiles.reduce((acc, file) => {
+                acc[file.extension] = acc[file.extension] || [];
+                acc[file.extension].push(file);
+                return acc;
+            }, {});
+
+            // Create DOM elements for groups
+            for (let ext in groups) {
+                const files = groups[ext];
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'category-group';
+
+                const headerHtml = `
+                    <div class="category-header">
+                        <div>
+                            <input type="checkbox" checked onchange="toggleGroup(this, '${ext}')">
+                            <span style="text-transform: uppercase;">.${ext}</span> 
+                            <span class="stats">(${files.length} টি ফাইল)</span>
+                        </div>
+                    </div>
+                `;
+
+                let filesHtml = `<div class="file-list" id="group-${ext}">`;
+                files.forEach(file => {
+                    filesHtml += `
+                        <div class="file-item">
+                            <input type="checkbox" class="file-chk group-${ext}" id="${file.id}" checked data-path="${file.originalPath}" data-newname="${file.newName}">
+                            <label for="${file.id}" title="${file.newName}">${file.newName}</label>
+                        </div>
+                    `;
+                });
+                filesHtml += `</div>`;
+
+                groupDiv.innerHTML = headerHtml + filesHtml;
+                container.appendChild(groupDiv);
+            }
+        }
+
+        function toggleGroup(headerCheckbox, ext) {
+            const checkboxes = document.querySelectorAll(`.group-${ext}`);
+            checkboxes.forEach(cb => cb.checked = headerCheckbox.checked);
+        }
+
+        async function processAndDownload() {
+            const downloadBtn = document.getElementById('downloadBtn');
+            const status = document.getElementById('status');
+            
+            downloadBtn.disabled = true;
+            downloadBtn.textContent = "তৈরি হচ্ছে...";
+
+            try {
+                const newZip = new JSZip();
+                const checkboxes = document.querySelectorAll('.file-chk:checked');
+                
+                if (checkboxes.length === 0) {
+                    alert("দয়া করে অন্তত একটি ফাইল সিলেক্ট করুন।");
+                    downloadBtn.disabled = false;
+                    downloadBtn.textContent = "নতুন ZIP ডাউনলোড করুন";
+                    return;
+                }
+
+                // Add selected files to new ZIP
+                for (let cb of checkboxes) {
+                    const originalPath = cb.getAttribute('data-path');
+                    const newName = cb.getAttribute('data-newname');
+                    
+                    // Read content from original zip object
+                    const content = await originalZipFiles[originalPath].async("blob");
+                    
+                    // Add to root of new zip
+                    newZip.file(newName, content);
+                }
+
+                // Generate and download
+                const blob = await newZip.generateAsync({type: "blob"});
+                saveAs(blob, "flattened_files.zip");
+
+                status.textContent = "সফলভাবে ডাউনলোড শুরু হয়েছে!";
+            } catch (err) {
+                console.error(err);
+                alert("ZIP তৈরিতে সমস্যা হয়েছে।");
+            } finally {
+                downloadBtn.disabled = false;
+                downloadBtn.textContent = "নতুন ZIP ডাউনলোড করুন";
+            }
+        }
+    </script>
+</body>
+</html>
