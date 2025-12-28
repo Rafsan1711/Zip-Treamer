@@ -675,3 +675,92 @@ Updating Best Moves: 100%|██████████| 2552023/2552023 [00:35
 🚀 Next: Starting the ResNet-10 Multi-Head Training!
 ```
 
+---
+
+### cell final
+```python
+# Final Cell: Securely Uploading Synapse-Edge Merged Database to Hugging Face
+# Purpose: Centralizing 5.5M+ Tactical & Elite data for high-speed multi-account training.
+
+from huggingface_hub import HfApi
+import os
+
+# --- ১. ক্রেডেনশিয়ালস এবং কনফিগারেশন ---
+# আপনার Hugging Face 'Write' টোকেনটি এখানে বসান
+HF_TOKEN = "HF_TOEN"
+
+# আপনার অর্গানাইজেশন বা ইউজারনেম এবং নতুন ডেটাসেট রিপোজিটরির নাম
+HF_ORG = "GambitFlow"
+DATASET_NAME = "Synapse-Edge-Data"
+REPO_ID = f"{HF_ORG}/{DATASET_NAME}"
+
+# ক্লাউডের তৈরি করা মার্জড ডেটাবেসের সঠিক পাথ
+db_source_path = '/content/drive/MyDrive/Chessmate_Project/Synapse_Edge/data/synapse_training_final.db'
+
+api = HfApi(token=HF_TOKEN)
+
+print(f"🚀 Initializing Upload Sequence for: {REPO_ID}")
+print(f"📦 Source File: {db_source_path}")
+
+if not os.path.exists(db_source_path):
+    print(f"❌ ERROR: Database file not found at {db_source_path}. Please verify the path.")
+else:
+    file_size = os.path.getsize(db_source_path) / (1024**3) # Convert to GB
+    print(f"⚖️  Database Size: {file_size:.2f} GB")
+
+    try:
+        # ২. রিপোজিটরি তৈরি (যদি আগে থেকে না থাকে)
+        print("🔍 Checking repository existence...")
+        api.create_repo(repo_id=REPO_ID, repo_type="dataset", exist_ok=True)
+
+        # ৩. ফাইল আপলোড (Streaming for Large Files)
+        print("⏳ Uploading to Hugging Face... This may take several minutes.")
+        future_url = api.upload_file(
+            path_or_fileobj=db_source_path,
+            path_in_repo="synapse_training_final.db",
+            repo_id=REPO_ID,
+            repo_type="dataset"
+        )
+
+        print("\n" + "="*60)
+        print("✅ SUCCESS: SYNAPSE-EDGE DATASET IS NOW CLOUD-READY!")
+        print("="*60)
+        print(f"🔗 Public URL: https://huggingface.co/datasets/{REPO_ID}")
+        print(f"🎯 Direct Link: https://huggingface.co/datasets/{REPO_ID}/resolve/main/synapse_training_final.db")
+        print("="*60)
+
+    except Exception as e:
+        print(f"\n❌ CRITICAL UPLOAD ERROR: {e}")
+        print("Tip: Ensure your HF_TOKEN has 'WRITE' permissions.")
+```
+
+Output:
+
+```text
+
+🚀 Initializing Upload Sequence for: GambitFlow/Synapse-Edge-Data
+📦 Source File: /content/drive/MyDrive/Chessmate_Project/Synapse_Edge/data/synapse_training_final.db
+⚖️  Database Size: 1.05 GB
+🔍 Checking repository existence...
+⏳ Uploading to Hugging Face... This may take several minutes.
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_auth.py:94: UserWarning: 
+The secret `HF_TOKEN` does not exist in your Colab secrets.
+To authenticate with the Hugging Face Hub, create a token in your settings tab (https://huggingface.co/settings/tokens), set it as secret in your Google Colab and restart your session.
+You will be able to reuse this secret in all of your notebooks.
+Please note that authentication is recommended but still optional to access public models or datasets.
+  warnings.warn(
+Processing Files (1 / 1)      : 100%
+ 1.12GB / 1.12GB, 96.0MB/s  
+New Data Upload               : 100%
+ 1.12GB / 1.12GB, 96.0MB/s  
+  ...synapse_training_final.db: 100%
+ 1.12GB / 1.12GB            
+
+============================================================
+✅ SUCCESS: SYNAPSE-EDGE DATASET IS NOW CLOUD-READY!
+============================================================
+🔗 Public URL: https://huggingface.co/datasets/GambitFlow/Synapse-Edge-Data
+🎯 Direct Link: https://huggingface.co/datasets/GambitFlow/Synapse-Edge-Data/resolve/main/synapse_training_final.db
+============================================================
+```
+---
