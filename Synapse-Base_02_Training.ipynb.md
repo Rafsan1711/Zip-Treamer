@@ -1106,10 +1106,11 @@ warmup_epochs                 : 3
 
 ### Cell 7
 ```python
-# Cell 7: Main Training Loop with Resume Support
+# Cell 7: Main Training Loop (FIXED - Fast Data Loading)
 
 import time
 from tqdm.auto import tqdm
+from collections import defaultdict
 
 # ==================== CHECKPOINT MANAGEMENT ====================
 
@@ -1119,7 +1120,7 @@ def save_checkpoint(epoch, step, loss):
         PATHS['checkpoints'],
         f'synapse_base_epoch{epoch}_step{step}.pt'
     )
-
+    
     torch.save({
         'epoch': epoch,
         'step': step,
@@ -1130,13 +1131,14 @@ def save_checkpoint(epoch, step, loss):
         'loss': loss,
         'config': TRAINING_CONFIG
     }, checkpoint_path)
-
+    
     train_state.update(
         epoch=epoch,
         total_steps=step,
         last_checkpoint=checkpoint_path
     )
-
+    
+    print(f"💾 Saved: {os.path.basename(checkpoint_path)}")
     return checkpoint_path
 
 
@@ -1144,170 +1146,186 @@ def load_checkpoint():
     """Load latest checkpoint if exists"""
     if train_state.state.get('last_checkpoint'):
         checkpoint_path = train_state.state['last_checkpoint']
-
+        
         if os.path.exists(checkpoint_path):
             print(f"\n📥 Loading checkpoint: {os.path.basename(checkpoint_path)}")
-
+            
             checkpoint = torch.load(checkpoint_path)
             model.load_state_dict(checkpoint['model_state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
             scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
             scaler.load_state_dict(checkpoint['scaler_state_dict'])
-
+            
             print(f"✅ Resumed from epoch {checkpoint['epoch']}, step {checkpoint['step']}")
             return checkpoint['epoch'], checkpoint['step']
-
+    
     return 0, 0
 
 
 # ==================== TRAINING FUNCTION ====================
 
-def train_one_epoch(epoch, start_step=0):
+def train_one_epoch(epoch):
     """Train for one epoch"""
     model.train()
     optimizer.zero_grad()
-
-    epoch_loss = 0.0
-    epoch_metrics = defaultdict(float)
-    step = start_step
-
-    pbar = tqdm(train_loader, desc=f"Epoch {epoch}/{TRAINING_CONFIG['epochs']}")
-
-    for batch_idx, batch in enumerate(pbar):
-
-        # Skip already processed batches (for resume)
-        if step < start_step:
-            step += 1
-            continue
-
-        # Move to GPU
-        board = batch['board'].to(device)
-        policy_target = batch['policy_target'].to(device)
-        value_target = batch['value_target'].to(device)
-        tactical_target = batch['tactical_target'].to(device)
-        phase_target = batch['phase_target'].to(device)
-
-        # Forward pass with mixed precision
-        with torch.amp.autocast('cuda'):
-            policy, value, tactical, phase = model(board)
-
-            loss, loss_dict = criterion(
-                (policy, value, tactical, phase),
-                (policy_target, value_target, tactical_target, phase_target)
-            )
-
-            # Scale for gradient accumulation
-            loss = loss / TRAINING_CONFIG['gradient_accumulation_steps']
-
-        # Backward pass
-        scaler.scale(loss).backward()
-
-        # Gradient accumulation
-        if (batch_idx + 1) % TRAINING_CONFIG['gradient_accumulation_steps'] == 0:
-
-            # Gradient clipping
-            scaler.unscale_(optimizer)
-            torch.nn.utils.clip_grad_norm_(
-                model.parameters(),
-                TRAINING_CONFIG['max_grad_norm']
-            )
-
-            # Optimizer step
-            scaler.step(optimizer)
-            scaler.update()
-            optimizer.zero_grad()
-            scheduler.step()
-
-            step += 1
-
-            # Logging
-            if step % TRAINING_CONFIG['log_every_steps'] == 0:
-                pbar.set_postfix({
-                    'loss': loss_dict['total'],
-                    'lr': scheduler.get_last_lr()[0]
-                })
-
-            # Checkpoint saving
-            if step % TRAINING_CONFIG['save_every_steps'] == 0:
-                checkpoint_path = save_checkpoint(epoch, step, loss_dict['total'])
-                print(f"\n💾 Checkpoint saved: {os.path.basename(checkpoint_path)}")
-
-                # Save best model
-                if loss_dict['total'] < train_state.state['best_loss']:
-                    train_state.state['best_loss'] = loss_dict['total']
-                    best_path = os.path.join(PATHS['base_model'], 'synapse_base_best.pt')
-                    torch.save(model.state_dict(), best_path)
-                    print(f"🏆 New best model! Loss: {loss_dict['total']:.6f}")
-
-        # Track metrics
-        epoch_loss += loss_dict['total']
-        for key, val in loss_dict.items():
-            if key != 'total':
-                epoch_metrics[key] += val
-
-    # Epoch summary
-    avg_loss = epoch_loss / len(train_loader)
-
+    
+    running_loss = 0.0
+    running_metrics = defaultdict(float)
+    global_step = train_state.state['total_steps']
+    
+    batch_count = 0
+    log_interval = TRAINING_CONFIG['log_every_steps']
+    save_interval = TRAINING_CONFIG['save_every_steps']
+    grad_accum = TRAINING_CONFIG['gradient_accumulation_steps']
+    
     print(f"\n{'='*70}")
-    print(f"📊 Epoch {epoch} Summary")
+    print(f"📊 Epoch {epoch}/{TRAINING_CONFIG['epochs']}")
     print(f"{'='*70}")
-    print(f"Average Loss: {avg_loss:.6f}")
-    print(f"Policy Loss: {epoch_metrics['policy'] / len(train_loader):.6f}")
-    print(f"Value Loss: {epoch_metrics['value'] / len(train_loader):.6f}")
-    print(f"Tactical Loss: {epoch_metrics['tactical'] / len(train_loader):.6f}")
-    print(f"Phase Loss: {epoch_metrics['phase'] / len(train_loader):.6f}")
-    print(f"Learning Rate: {scheduler.get_last_lr()[0]:.6f}")
-    print(f"{'='*70}\n")
-
-    return avg_loss, step
+    
+    # Create fresh iterator
+    data_iter = iter(train_loader)
+    
+    try:
+        while True:  # Process until dataset exhausted
+            try:
+                batch = next(data_iter)
+            except StopIteration:
+                break
+            
+            batch_count += 1
+            
+            # Move to GPU
+            board = batch['board'].to(device, non_blocking=True)
+            policy_target = batch['policy_target'].to(device, non_blocking=True)
+            value_target = batch['value_target'].to(device, non_blocking=True)
+            tactical_target = batch['tactical_target'].to(device, non_blocking=True)
+            phase_target = batch['phase_target'].to(device, non_blocking=True)
+            
+            # Forward pass with mixed precision
+            with torch.amp.autocast('cuda'):
+                policy, value, tactical, phase = model(board)
+                
+                loss, loss_dict = criterion(
+                    (policy, value, tactical, phase),
+                    (policy_target, value_target, tactical_target, phase_target)
+                )
+                
+                # Scale for gradient accumulation
+                loss = loss / grad_accum
+            
+            # Backward pass
+            scaler.scale(loss).backward()
+            
+            # Gradient accumulation
+            if batch_count % grad_accum == 0:
+                
+                # Gradient clipping
+                scaler.unscale_(optimizer)
+                torch.nn.utils.clip_grad_norm_(
+                    model.parameters(),
+                    TRAINING_CONFIG['max_grad_norm']
+                )
+                
+                # Optimizer step
+                scaler.step(optimizer)
+                scaler.update()
+                optimizer.zero_grad()
+                scheduler.step()
+                
+                global_step += 1
+                train_state.state['total_steps'] = global_step
+                
+                # Accumulate metrics
+                running_loss += loss_dict['total']
+                for key, val in loss_dict.items():
+                    if key != 'total':
+                        running_metrics[key] += val
+                
+                # Logging
+                if global_step % log_interval == 0:
+                    avg_loss = running_loss / log_interval
+                    lr = scheduler.get_last_lr()[0]
+                    
+                    print(f"Step {global_step:6d} | "
+                          f"Loss: {avg_loss:.4f} | "
+                          f"Policy: {running_metrics['policy']/log_interval:.4f} | "
+                          f"Value: {running_metrics['value']/log_interval:.4f} | "
+                          f"LR: {lr:.6f}")
+                    
+                    running_loss = 0.0
+                    running_metrics = defaultdict(float)
+                
+                # Checkpoint saving
+                if global_step % save_interval == 0:
+                    save_checkpoint(epoch, global_step, loss_dict['total'])
+                    
+                    # Save best model
+                    if loss_dict['total'] < train_state.state['best_loss']:
+                        train_state.state['best_loss'] = loss_dict['total']
+                        best_path = os.path.join(PATHS['base_model'], 'synapse_base_best.pt')
+                        torch.save(model.state_dict(), best_path)
+                        print(f"   🏆 New best! Loss: {loss_dict['total']:.6f}")
+            
+            # Progress indicator every 100 batches
+            if batch_count % 100 == 0:
+                print(f"   Processed {batch_count:,} batches...", end='\r')
+    
+    except KeyboardInterrupt:
+        print("\n⚠️  Interrupted! Saving checkpoint...")
+        save_checkpoint(epoch, global_step, loss_dict['total'])
+        raise
+    
+    print(f"\n✅ Epoch {epoch} complete: {batch_count:,} batches processed")
+    return global_step
 
 
 # ==================== MAIN TRAINING LOOP ====================
 
 print(f"\n{'='*70}")
 print(f"🚀 STARTING SYNAPSE-BASE TRAINING")
-print(f"{'='*70}\n")
+print(f"{'='*70}")
+print(f"Dataset: {local_db_path}")
+print(f"Batch size: 256")
+print(f"Gradient accumulation: 4 (effective: 1024)")
+print(f"Estimated batches per epoch: 19,500")
+print(f"{'='*70}")
 
 # Load checkpoint if exists
-start_epoch, start_step = load_checkpoint()
+start_epoch, _ = load_checkpoint()
 
 try:
     for epoch in range(start_epoch + 1, TRAINING_CONFIG['epochs'] + 1):
-
-        epoch_start_time = time.time()
-
+        
+        epoch_start = time.time()
+        
         # Train one epoch
-        avg_loss, final_step = train_one_epoch(epoch, start_step if epoch == start_epoch + 1 else 0)
-
-        epoch_time = time.time() - epoch_start_time
-
-        # Save epoch checkpoint
-        checkpoint_path = save_checkpoint(epoch, final_step, avg_loss)
-
-        print(f"⏱️  Epoch {epoch} completed in {epoch_time/60:.2f} minutes")
-        print(f"💾 Checkpoint: {os.path.basename(checkpoint_path)}\n")
-
-        # Reset start_step for next epoch
-        start_step = 0
+        final_step = train_one_epoch(epoch)
+        
+        epoch_time = (time.time() - epoch_start) / 60
+        
+        # Save end-of-epoch checkpoint
+        save_checkpoint(epoch, final_step, train_state.state['best_loss'])
+        
+        print(f"\n⏱️  Epoch {epoch} time: {epoch_time:.1f} minutes")
+        print(f"📊 Best loss so far: {train_state.state['best_loss']:.6f}")
 
 except KeyboardInterrupt:
-    print("\n⚠️  Training interrupted!")
-    print("💾 Saving checkpoint...")
-    save_checkpoint(epoch, final_step, avg_loss)
-    print("✅ Checkpoint saved. You can resume later by re-running this cell.")
+    print("\n\n⚠️  Training stopped by user")
+    print("✅ All checkpoints saved. Re-run this cell to resume.")
 
 except Exception as e:
-    print(f"\n❌ Training error: {e}")
-    print("💾 Saving emergency checkpoint...")
-    save_checkpoint(epoch, final_step, avg_loss)
-    raise e
+    print(f"\n\n❌ Training error: {e}")
+    import traceback
+    traceback.print_exc()
+    print("\n💾 Emergency checkpoint saved")
+    save_checkpoint(epoch, train_state.state['total_steps'], 999.0)
 
 print(f"\n{'='*70}")
-print(f"🎉 TRAINING COMPLETE!")
+print(f"🎉 TRAINING SESSION COMPLETE")
 print(f"{'='*70}")
-print(f"Best Loss: {train_state.state['best_loss']:.6f}")
-print(f"Total Steps: {train_state.state['total_steps']:,}")
-print(f"Best Model: synapse_base_best.pt")
+print(f"Total steps: {train_state.state['total_steps']:,}")
+print(f"Best loss: {train_state.state['best_loss']:.6f}")
+print(f"Best model: {PATHS['base_model']}/synapse_base_best.pt")
 print(f"{'='*70}\n")
 ```
 
@@ -1317,11 +1335,6 @@ Output:
 
 
 ```text
-======================================================================
-🚀 STARTING SYNAPSE-BASE TRAINING
-======================================================================
 
-Epoch 1/50: 
- 0/? [00:00<?, ?it/s]
 ```
 
