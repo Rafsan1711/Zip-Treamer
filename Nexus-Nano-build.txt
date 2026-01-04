@@ -1,9 +1,9 @@
-===== Build Queued at 2026-01-04 14:23:52 / Commit SHA: 5bf0029 =====
+===== Build Queued at 2026-01-04 14:43:41 / Commit SHA: 6955644 =====
 
 --> FROM docker.io/library/python:3.10-slim@sha256:7b68a5fa7cf0d20b4cedb1dc9a134fdd394fe27edbc4c2519756c91d21df2313
 DONE 0.8s
 
-DONE 1.3s
+DONE 1.0s
 
 DONE 1.3s
 
@@ -17,7 +17,7 @@ Get:3 http://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
 Get:4 http://deb.debian.org/debian trixie/main amd64 Packages [9670 kB]
 Get:5 http://deb.debian.org/debian trixie-updates/main amd64 Packages [5412 B]
 Get:6 http://deb.debian.org/debian-security trixie-security/main amd64 Packages [94.0 kB]
-Fetched 9860 kB in 1s (13.0 MB/s)
+Fetched 9860 kB in 1s (13.7 MB/s)
 Reading package lists...
 Reading package lists...
 Building dependency tree...
@@ -77,7 +77,7 @@ debconf: falling back to frontend: Teletype
 debconf: unable to initialize frontend: Teletype
 debconf: (This frontend requires a controlling tty.)
 debconf: falling back to frontend: Noninteractive
-Fetched 5700 kB in 0s (117 MB/s)
+Fetched 5700 kB in 0s (133 MB/s)
 Selecting previously unselected package bash-completion.
 (Reading database ... 
 (Reading database ... 5%
@@ -209,7 +209,7 @@ Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b5) ...
 Setting up libcurl4t64:amd64 (8.14.1-2+deb13u2) ...
 Setting up curl (8.14.1-2+deb13u2) ...
 Processing triggers for libc-bin (2.41-12) ...
-DONE 3.7s
+DONE 3.5s
 
 --> COPY requirements.txt .
 DONE 0.0s
@@ -217,115 +217,115 @@ DONE 0.0s
 --> RUN pip install --no-cache-dir -r requirements.txt
 Collecting fastapi==0.109.0
   Downloading fastapi-0.109.0-py3-none-any.whl (92 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 92.0/92.0 kB 35.0 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 92.0/92.0 kB 22.5 MB/s eta 0:00:00
 Collecting uvicorn[standard]==0.27.0
   Downloading uvicorn-0.27.0-py3-none-any.whl (60 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.6/60.6 kB 46.4 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.6/60.6 kB 18.5 MB/s eta 0:00:00
 Collecting onnxruntime==1.17.0
   Downloading onnxruntime-1.17.0-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.8 MB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.8/6.8 MB 259.9 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.8/6.8 MB 279.5 MB/s eta 0:00:00
 Collecting python-chess==1.999
   Downloading python_chess-1.999-py3-none-any.whl (1.4 kB)
 Collecting numpy==1.24.3
   Downloading numpy-1.24.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.3 MB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.3/17.3 MB 195.8 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.3/17.3 MB 204.1 MB/s eta 0:00:00
 Collecting huggingface-hub==0.20.3
   Downloading huggingface_hub-0.20.3-py3-none-any.whl (330 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 330.1/330.1 kB 511.6 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 330.1/330.1 kB 417.2 MB/s eta 0:00:00
 Collecting pydantic==2.5.3
   Downloading pydantic-2.5.3-py3-none-any.whl (381 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 381.9/381.9 kB 457.2 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 381.9/381.9 kB 538.4 MB/s eta 0:00:00
 Collecting typing-extensions>=4.8.0
   Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 44.6/44.6 kB 319.2 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 44.6/44.6 kB 333.9 MB/s eta 0:00:00
 Collecting starlette<0.36.0,>=0.35.0
   Downloading starlette-0.35.1-py3-none-any.whl (71 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 71.1/71.1 kB 371.5 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 71.1/71.1 kB 392.3 MB/s eta 0:00:00
 Collecting h11>=0.8
   Downloading h11-0.16.0-py3-none-any.whl (37 kB)
 Collecting click>=7.0
   Downloading click-8.3.1-py3-none-any.whl (108 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.3/108.3 kB 394.9 MB/s eta 0:00:00
-Collecting pyyaml>=5.1
-  Downloading pyyaml-6.0.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (770 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 770.3/770.3 kB 481.6 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.3/108.3 kB 435.0 MB/s eta 0:00:00
 Collecting uvloop!=0.15.0,!=0.15.1,>=0.14.0
   Downloading uvloop-0.22.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.7 MB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 212.3 MB/s eta 0:00:00
-Collecting python-dotenv>=0.13
-  Downloading python_dotenv-1.2.1-py3-none-any.whl (21 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 556.1 MB/s eta 0:00:00
 Collecting watchfiles>=0.13
   Downloading watchfiles-1.1.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (455 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 455.6/455.6 kB 537.7 MB/s eta 0:00:00
-Collecting websockets>=10.4
-  Downloading websockets-15.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (181 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.6/181.6 kB 270.2 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 455.6/455.6 kB 503.1 MB/s eta 0:00:00
+Collecting pyyaml>=5.1
+  Downloading pyyaml-6.0.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (770 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 770.3/770.3 kB 511.7 MB/s eta 0:00:00
 Collecting httptools>=0.5.0
   Downloading httptools-0.7.1-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (440 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 440.9/440.9 kB 285.2 MB/s eta 0:00:00
-Collecting coloredlogs
-  Downloading coloredlogs-15.0.1-py2.py3-none-any.whl (46 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.0/46.0 kB 304.6 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 440.9/440.9 kB 548.5 MB/s eta 0:00:00
+Collecting websockets>=10.4
+  Downloading websockets-15.0.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (181 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.6/181.6 kB 482.3 MB/s eta 0:00:00
+Collecting python-dotenv>=0.13
+  Downloading python_dotenv-1.2.1-py3-none-any.whl (21 kB)
 Collecting sympy
   Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 428.6 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 525.4 MB/s eta 0:00:00
 Collecting packaging
   Downloading packaging-25.0-py3-none-any.whl (66 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.5/66.5 kB 342.1 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.5/66.5 kB 390.2 MB/s eta 0:00:00
 Collecting flatbuffers
   Downloading flatbuffers-25.12.19-py2.py3-none-any.whl (26 kB)
 Collecting protobuf
   Downloading protobuf-6.33.2-cp39-abi3-manylinux2014_x86_64.whl (323 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 323.3/323.3 kB 513.1 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 323.3/323.3 kB 532.4 MB/s eta 0:00:00
+Collecting coloredlogs
+  Downloading coloredlogs-15.0.1-py2.py3-none-any.whl (46 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.0/46.0 kB 335.6 MB/s eta 0:00:00
 Collecting chess<2,>=1
   Downloading chess-1.11.2.tar.gz (6.1 MB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.1/6.1 MB 140.1 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.1/6.1 MB 540.1 MB/s eta 0:00:00
   Preparing metadata (setup.py): started
   Preparing metadata (setup.py): finished with status 'done'
-Collecting requests
-  Downloading requests-2.32.5-py3-none-any.whl (64 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.7/64.7 kB 336.0 MB/s eta 0:00:00
-Collecting filelock
-  Downloading filelock-3.20.2-py3-none-any.whl (16 kB)
-Collecting fsspec>=2023.5.0
-  Downloading fsspec-2025.12.0-py3-none-any.whl (201 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 201.4/201.4 kB 304.6 MB/s eta 0:00:00
 Collecting tqdm>=4.42.1
   Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 378.3 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 401.6 MB/s eta 0:00:00
+Collecting requests
+  Downloading requests-2.32.5-py3-none-any.whl (64 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.7/64.7 kB 405.3 MB/s eta 0:00:00
+Collecting fsspec>=2023.5.0
+  Downloading fsspec-2025.12.0-py3-none-any.whl (201 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 201.4/201.4 kB 481.4 MB/s eta 0:00:00
+Collecting filelock
+  Downloading filelock-3.20.2-py3-none-any.whl (16 kB)
 Collecting annotated-types>=0.4.0
   Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
 Collecting pydantic-core==2.14.6
   Downloading pydantic_core-2.14.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 387.5 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 399.8 MB/s eta 0:00:00
 Collecting anyio<5,>=3.4.0
   Downloading anyio-4.12.0-py3-none-any.whl (113 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 113.4/113.4 kB 428.4 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 113.4/113.4 kB 417.8 MB/s eta 0:00:00
 Collecting humanfriendly>=9.1
   Downloading humanfriendly-10.0-py2.py3-none-any.whl (86 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 86.8/86.8 kB 382.3 MB/s eta 0:00:00
-Collecting charset_normalizer<4,>=2
-  Downloading charset_normalizer-3.4.4-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (153 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 153.6/153.6 kB 450.6 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 86.8/86.8 kB 371.3 MB/s eta 0:00:00
 Collecting urllib3<3,>=1.21.1
   Downloading urllib3-2.6.2-py3-none-any.whl (131 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 131.2/131.2 kB 454.3 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 131.2/131.2 kB 471.9 MB/s eta 0:00:00
 Collecting certifi>=2017.4.17
   Downloading certifi-2026.1.4-py3-none-any.whl (152 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 152.9/152.9 kB 453.5 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 152.9/152.9 kB 501.3 MB/s eta 0:00:00
+Collecting charset_normalizer<4,>=2
+  Downloading charset_normalizer-3.4.4-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (153 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 153.6/153.6 kB 491.5 MB/s eta 0:00:00
 Collecting idna<4,>=2.5
   Downloading idna-3.11-py3-none-any.whl (71 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 71.0/71.0 kB 388.2 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 71.0/71.0 kB 395.0 MB/s eta 0:00:00
 Collecting mpmath<1.4,>=1.1.0
   Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 458.7 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 568.4 MB/s eta 0:00:00
 Collecting exceptiongroup>=1.0.2
   Downloading exceptiongroup-1.3.1-py3-none-any.whl (16 kB)
 Building wheels for collected packages: chess
   Building wheel for chess (setup.py): started
   Building wheel for chess (setup.py): finished with status 'done'
-  Created wheel for chess: filename=chess-1.11.2-py3-none-any.whl size=147880 sha256=be01185e6ecbe7759cacbf3921b71db40b16f5366092a79de7f393624af758d9
-  Stored in directory: /tmp/pip-ephem-wheel-cache-ow406r0l/wheels/7a/79/8e/0d6e404db9f1e82af2e40b49161d6acab485d75dfb0470ac08
+  Created wheel for chess: filename=chess-1.11.2-py3-none-any.whl size=147880 sha256=a946330a14488a9c6c33b763bb3e5e14c09c9a96308c949996e010168b9d1952
+  Stored in directory: /tmp/pip-ephem-wheel-cache-bydj6vkd/wheels/7a/79/8e/0d6e404db9f1e82af2e40b49161d6acab485d75dfb0470ac08
 Successfully built chess
 Installing collected packages: mpmath, flatbuffers, websockets, uvloop, urllib3, typing-extensions, tqdm, sympy, pyyaml, python-dotenv, protobuf, packaging, numpy, idna, humanfriendly, httptools, h11, fsspec, filelock, click, chess, charset_normalizer, certifi, annotated-types, uvicorn, requests, python-chess, pydantic-core, exceptiongroup, coloredlogs, pydantic, onnxruntime, huggingface-hub, anyio, watchfiles, starlette, fastapi
 Successfully installed annotated-types-0.7.0 anyio-4.12.0 certifi-2026.1.4 charset_normalizer-3.4.4 chess-1.11.2 click-8.3.1 coloredlogs-15.0.1 exceptiongroup-1.3.1 fastapi-0.109.0 filelock-3.20.2 flatbuffers-25.12.19 fsspec-2025.12.0 h11-0.16.0 httptools-0.7.1 huggingface-hub-0.20.3 humanfriendly-10.0 idna-3.11 mpmath-1.3.0 numpy-1.24.3 onnxruntime-1.17.0 packaging-25.0 protobuf-6.33.2 pydantic-2.5.3 pydantic-core-2.14.6 python-chess-1.999 python-dotenv-1.2.1 pyyaml-6.0.3 requests-2.32.5 starlette-0.35.1 sympy-1.14.0 tqdm-4.67.1 typing-extensions-4.15.0 urllib3-2.6.2 uvicorn-0.27.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1
@@ -333,7 +333,7 @@ WARNING: Running pip as the 'root' user can result in broken permissions and con
 
 [notice] A new release of pip is available: 23.0.1 -> 25.3
 [notice] To update, run: pip install --upgrade pip
-DONE 16.2s
+DONE 14.9s
 
 --> RUN mkdir -p /app/models
 DONE 0.1s
@@ -341,7 +341,7 @@ DONE 0.1s
 --> COPY app.py .
 DONE 0.0s
 
---> RUN python -c "from huggingface_hub import hf_hub_download;     hf_hub_download(         repo_id='GambitFlow/Nexus-Nano',         filename='nexus_nano.onnx',         local_dir='/app/models',         local_dir_use_symlinks=False     )"
+--> RUN python -c "from huggingface_hub import hf_hub_download;     print('Downloading Nexus-Nano model...');     hf_hub_download(         repo_id='GambitFlow/Nexus-Nano',         filename='nexus_nano.onnx',         local_dir='/app/models',         local_dir_use_symlinks=False     );     print('Download complete!')"
 Traceback (most recent call last):
   File "/usr/local/lib/python3.10/site-packages/huggingface_hub/utils/_errors.py", line 286, in hf_raise_for_status
     response.raise_for_status()
@@ -367,8 +367,9 @@ Traceback (most recent call last):
     hf_raise_for_status(response)
   File "/usr/local/lib/python3.10/site-packages/huggingface_hub/utils/_errors.py", line 296, in hf_raise_for_status
     raise EntryNotFoundError(message, response) from e
-huggingface_hub.utils._errors.EntryNotFoundError: 404 Client Error. (Request ID: Root=1-695a7812-1eb4c7da7e2d9b2f35e033dd;5cd2d33d-8075-460d-9a82-00d6eeb94ae6)
+huggingface_hub.utils._errors.EntryNotFoundError: 404 Client Error. (Request ID: Root=1-695a7cb6-689dab7a29922fdf5f4d3378;ac36c47f-824d-436d-8ed6-9c0824f32f3d)
 
 Entry Not Found for url: https://huggingface.co/GambitFlow/Nexus-Nano/resolve/main/nexus_nano.onnx.
+Downloading Nexus-Nano model...
 
---> ERROR: process "/bin/sh -c python -c \"from huggingface_hub import hf_hub_download;     hf_hub_download(         repo_id='GambitFlow/Nexus-Nano',         filename='nexus_nano.onnx',         local_dir='/app/models',         local_dir_use_symlinks=False     )\"" did not complete successfully: exit code: 1
+--> ERROR: process "/bin/sh -c python -c \"from huggingface_hub import hf_hub_download;     print('Downloading Nexus-Nano model...');     hf_hub_download(         repo_id='GambitFlow/Nexus-Nano',         filename='nexus_nano.onnx',         local_dir='/app/models',         local_dir_use_symlinks=False     );     print('Download complete!')\"" did not complete successfully: exit code: 1
