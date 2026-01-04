@@ -1,0 +1,64 @@
+===== Application Startup at 2026-01-04 15:05:45 =====
+
+/usr/local/lib/python3.10/site-packages/pydantic/_internal/_fields.py:149: UserWarning: Field "model_loaded" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/usr/local/lib/python3.10/site-packages/pydantic/_internal/_fields.py:149: UserWarning: Field "model_path" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/app/app.py:60: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+2026-01-04 15:05:54,864 - INFO - 🚀 Starting Nexus-Core API...
+2026-01-04 15:05:54,864 - ERROR - ❌ /app/models/ directory does not exist!
+ERROR:    Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 738, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+  File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 610, in __aenter__
+    await self._router.startup()
+  File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 715, in startup
+    await handler()
+  File "/app/app.py", line 77, in startup_event
+    raise FileNotFoundError("/app/models/ not found")
+FileNotFoundError: /app/models/ not found
+
+ERROR:    Application startup failed. Exiting.
+/usr/local/lib/python3.10/site-packages/pydantic/_internal/_fields.py:149: UserWarning: Field "model_loaded" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/usr/local/lib/python3.10/site-packages/pydantic/_internal/_fields.py:149: UserWarning: Field "model_path" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+/app/app.py:60: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+2026-01-04 15:05:57,166 - INFO - 🚀 Starting Nexus-Core API...
+2026-01-04 15:05:57,166 - ERROR - ❌ /app/models/ directory does not exist!
+ERROR:    Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 738, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+  File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 610, in __aenter__
+    await self._router.startup()
+  File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 715, in startup
+    await handler()
+  File "/app/app.py", line 77, in startup_event
+    raise FileNotFoundError("/app/models/ not found")
+FileNotFoundError: /app/models/ not found
+
+ERROR:    Application startup failed. Exiting.
