@@ -1,4 +1,4 @@
-## Notebook Name: Synapse-Base_02_Training.ipynb
+## Notebook Name: GambitFlow_Synapse_Base_Training.ipynb
 
 ---
 
