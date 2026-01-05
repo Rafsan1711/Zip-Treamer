@@ -1,6 +1,6 @@
-===== Application Startup at 2026-01-04 15:05:43 =====
+===== Application Startup at 2026-01-05 07:56:10 =====
 
-/app/app.py:202: DeprecationWarning: 
+/app/app.py:205: DeprecationWarning: 
         on_event is deprecated, use lifespan event handlers instead.
 
         Read more about it in the
@@ -9,8 +9,9 @@
   @app.on_event("startup")
 INFO:     Started server process [1]
 INFO:     Waiting for application startup.
-2026-01-04 15:05:52,308 - INFO - 🚀 Starting Nexus-Nano API...
-2026-01-04 15:05:52,309 - ERROR - ❌ /app/models/ directory not found!
+2026-01-05 07:56:20,592 - INFO - 🚀 Starting Nexus-Nano API...
+2026-01-05 07:56:20,592 - INFO - 🔍 Looking for: /app/models/nexus-nano.onnx
+2026-01-05 07:56:20,592 - ERROR - ❌ /app/models/ not found!
 ERROR:    Traceback (most recent call last):
   File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 738, in lifespan
     async with self.lifespan_context(app) as maybe_state:
@@ -18,31 +19,8 @@ ERROR:    Traceback (most recent call last):
     await self._router.startup()
   File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 715, in startup
     await handler()
-  File "/app/app.py", line 218, in startup
-    raise FileNotFoundError("/app/models/ not found")
-FileNotFoundError: /app/models/ not found
-
-ERROR:    Application startup failed. Exiting.
-/app/app.py:202: DeprecationWarning: 
-        on_event is deprecated, use lifespan event handlers instead.
-
-        Read more about it in the
-        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
-        
-  @app.on_event("startup")
-INFO:     Started server process [1]
-INFO:     Waiting for application startup.
-2026-01-04 15:05:53,716 - INFO - 🚀 Starting Nexus-Nano API...
-2026-01-04 15:05:53,716 - ERROR - ❌ /app/models/ directory not found!
-ERROR:    Traceback (most recent call last):
-  File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 738, in lifespan
-    async with self.lifespan_context(app) as maybe_state:
-  File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 610, in __aenter__
-    await self._router.startup()
-  File "/usr/local/lib/python3.10/site-packages/starlette/routing.py", line 715, in startup
-    await handler()
-  File "/app/app.py", line 218, in startup
-    raise FileNotFoundError("/app/models/ not found")
-FileNotFoundError: /app/models/ not found
+  File "/app/app.py", line 224, in startup
+    raise FileNotFoundError("/app/models/ directory missing")
+FileNotFoundError: /app/models/ directory missing
 
 ERROR:    Application startup failed. Exiting.
