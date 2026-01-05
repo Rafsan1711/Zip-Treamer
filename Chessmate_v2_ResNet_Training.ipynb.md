@@ -1,9 +1,9 @@
-## Notebook Name: Chessmate Data Prep.ipynb
+## Notebook Name: Chessmate_v2_ResNet_Training.ipynb.md
 
 ---
 
 ## 1. Introduction
-eta amar  GambitFlow/Nexus-Core ei model er dataset bananor notebook. 
+eta amar  GambitFlow/Nexus-Core ei model bananor notebook. 
 
 ---
 
