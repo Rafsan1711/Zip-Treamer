@@ -1,4 +1,25 @@
-# VortexAlpha Chess Engine - Complete Development Roadmap
+# VortexAlpha Chess Engine - Claude ai prompt
+
+ami world er top 1 chess engine banate chai. ami free te start korte chai mane paid plan nite parbo kotharo. ami za za use korte parbo.
+1. Nijer PC
+2. Github
+3. huggingface spaces.
+4. Colab
+5. Kubernetes
+6. onnoder Research paper and experiments.
+7. World er Best techniques za proven
+8. etc free services
+amra zotota advanced project banano zay korbo, ami etake GPL v3 te rakhchi future contribution er jonno. amra 1st e . ar ami engine er codes etc github e rakhbo and manage korbo.amar engine shob env te chalanor jonno docker etc use korbo amra.
+1. amar engine pc te locally test kora zabe.
+2. Amar site https://gambitflow.onrender.com/ etateo play Page e ei engine boshabo onno DL based engines er sathe amar. amar site tate API er madhyome Moves ashe.
+3. ar amra etake dockerize kore pore Huggingface Docker spaces e Run kore Move api diye amader site e pathate pari.onek beshi cutomizable . 
+4. ami etake succesfully bananor por huggingface spaces e docker space e chaliye python flask diye move amar site e ante parbo, aro onekvabe etake use kora zabe. zemon lichess bot banano zabe zetate eta same time e alada onek match khelbe, huggingface spaces e 2 vcpu dey 16GB RAM . to amra etake emon banabo ze zoto powerfull hardware toto valo perfomance . to amra joto valo options ache shegulo use korbo. amra etake age working engine banabo tarpor etake improve kortei thakbo bochorer por bochor stockfish er moto ar eta advanced project. to tumi best tech stack choice korba, ami ageo pure Deep learning based model baniyechi but shegulo GPU hungry tai , Pure DL khub powerfull banano zabe na.
+start koro amar Engine "VortexAlpha" ar tumi zei file structure diba shetai fixed. ami zeno vscode or github.dev  e code korte pari. Start, c++  better hobe mone hoy.
+to tumi ekta Roadmap.md baniye dao zetate sequence maintain kore prottekta Milestones and steps etc likha za onuzayi ami eka kaj shuru korte parbo. zokhon zei step kora dorkar tokhon shei step onno ai ke diyeo korate parbo etc. to code artifact e dao, besh boro hobe size e tai continue korte korte koyek reponse e full md file diba.
+
+---
+
+# VortexAlpha Chess Engine - Complete Development Roadmap By Claude ai
 
 ## Project Overview
 
