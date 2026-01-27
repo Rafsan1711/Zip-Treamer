@@ -1,232 +1,73 @@
 Run cd build
+  
 MSBuild version 17.14.40+3e7442088 for .NET Framework
-
   1>Checking Build System
   Building Custom Rule D:/a/VortexAlpha/VortexAlpha/CMakeLists.txt
   main.cpp
   uci.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/main.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/main.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/main.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/uci.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/uci.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/uci.cpp')
-  
   board.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/board/board.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/board/board.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/board/board.cpp')
-  
   bitboard.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/board/bitboard.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/board/bitboard.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/board/bitboard.cpp')
-  
+D:\a\VortexAlpha\VortexAlpha\src\board\board.cpp(241,28): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\board\board.cpp(241,28): warning C4100: 'm': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\board\board.cpp(245,30): warning C4100: 'm': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\board\board.cpp(249,27): warning C4100: 'm': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
   magic.cpp
   zobrist.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/board/zobrist.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/board/zobrist.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/board/zobrist.cpp')
-  
   movegen.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/movegen/movegen.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/movegen/movegen.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/movegen/movegen.cpp')
-  
+D:\a\VortexAlpha\VortexAlpha\src\movegen\movegen.cpp(8,50): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\movegen\movegen.cpp(8,50): warning C4100: 'moves': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\movegen\movegen.cpp(8,37): warning C4100: 'board': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\movegen\movegen.cpp(13,53): warning C4100: 'moves': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\movegen\movegen.cpp(13,40): warning C4100: 'board': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
   attacks.cpp
-D:\a\VortexAlpha\VortexAlpha\src\movegen\attacks.cpp(11,46): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\movegen\attacks.cpp(11,46): warning C4100: 'occupied': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\movegen\attacks.cpp(11,34): warning C4100: 's': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\movegen\attacks.cpp(16,48): warning C4100: 'occupied': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\movegen\attacks.cpp(16,36): warning C4100: 's': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
   search.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/search/search.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/search/search.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/search/search.cpp')
-  
+D:\a\VortexAlpha\VortexAlpha\src\search\search.cpp(12,43): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\search\search.cpp(12,43): warning C4100: 'depth': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\search\search.cpp(12,32): warning C4100: 'board': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
   alphabeta.cpp
   ttable.cpp
   movepicker.cpp
   eval.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/eval/eval.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/eval/eval.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-  (compiling source file '../src/eval/eval.cpp')
-  
+D:\a\VortexAlpha\VortexAlpha\src\eval\eval.cpp(8,33): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\eval\eval.cpp(8,33): warning C4100: 'board': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
   classical.cpp
   utils.cpp
-D:\a\VortexAlpha\VortexAlpha\src\utils\utils.cpp(8,15): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\utils.cpp(8,15): warning C4244: 'initializing': conversion from 'int' to 'char', possible loss of data [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\utils.cpp(9,15): warning C4244: 'initializing': conversion from 'int' to 'char', possible loss of data [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
   timer.cpp
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): warning C4244: 'return': conversion from '_Rep' to 'double', possible loss of data [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): warning C4244:         with [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): warning C4244:         [ [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): warning C4244:             _Rep=__int64 [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): warning C4244:         ] [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha.vcxproj]
   Building Custom Rule D:/a/VortexAlpha/VortexAlpha/CMakeLists.txt
   test_board.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../tests/test_board.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../tests/test_board.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../tests/test_board.cpp')
-  
   test_movegen.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../tests/test_movegen.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../tests/test_movegen.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../tests/test_movegen.cpp')
-  
   perft.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../tests/perft.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../tests/perft.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../tests/perft.cpp')
-  
+D:\a\VortexAlpha\VortexAlpha\tests\perft.cpp(11,34): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\tests\perft.cpp(11,34): warning C4100: 'depth': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\tests\perft.cpp(11,23): warning C4100: 'board': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
   uci.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/uci.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/uci.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/uci.cpp')
-  
   board.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/board/board.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/board/board.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/board/board.cpp')
-  
+D:\a\VortexAlpha\VortexAlpha\src\board\board.cpp(241,28): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\board\board.cpp(241,28): warning C4100: 'm': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\board\board.cpp(245,30): warning C4100: 'm': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\board\board.cpp(249,27): warning C4100: 'm': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
   bitboard.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/board/bitboard.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/board/bitboard.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/board/bitboard.cpp')
-  
   magic.cpp
   zobrist.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/board/zobrist.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/board/zobrist.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/board/zobrist.cpp')
-  
   movegen.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/movegen/movegen.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/movegen/movegen.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/movegen/movegen.cpp')
-  
+D:\a\VortexAlpha\VortexAlpha\src\movegen\movegen.cpp(8,50): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\movegen\movegen.cpp(8,50): warning C4100: 'moves': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\movegen\movegen.cpp(8,37): warning C4100: 'board': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\movegen\movegen.cpp(13,53): warning C4100: 'moves': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\movegen\movegen.cpp(13,40): warning C4100: 'board': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
   attacks.cpp
-D:\a\VortexAlpha\VortexAlpha\src\movegen\attacks.cpp(11,46): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\movegen\attacks.cpp(11,46): warning C4100: 'occupied': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\movegen\attacks.cpp(11,34): warning C4100: 's': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\movegen\attacks.cpp(16,48): warning C4100: 'occupied': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\movegen\attacks.cpp(16,36): warning C4100: 's': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
   search.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/search/search.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/search/search.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/search/search.cpp')
-  
+D:\a\VortexAlpha\VortexAlpha\src\search\search.cpp(12,43): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\search\search.cpp(12,43): warning C4100: 'depth': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\search\search.cpp(12,32): warning C4100: 'board': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
   alphabeta.cpp
   ttable.cpp
   movepicker.cpp
   eval.cpp
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(51,12): error C3861: '__builtin_popcountll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/eval/eval.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(56,19): error C3861: '__builtin_ctzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/eval/eval.cpp')
-  
-D:\a\VortexAlpha\VortexAlpha\src\board\bitboard.h(61,24): error C3861: '__builtin_clzll': identifier not found [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-  (compiling source file '../src/eval/eval.cpp')
-  
+D:\a\VortexAlpha\VortexAlpha\src\eval\eval.cpp(8,33): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
+D:\a\VortexAlpha\VortexAlpha\src\eval\eval.cpp(8,33): warning C4100: 'board': unreferenced parameter [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
   classical.cpp
   utils.cpp
-D:\a\VortexAlpha\VortexAlpha\src\utils\utils.cpp(8,15): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\utils.cpp(8,15): warning C4244: 'initializing': conversion from 'int' to 'char', possible loss of data [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\utils.cpp(9,15): warning C4244: 'initializing': conversion from 'int' to 'char', possible loss of data [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
   timer.cpp
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): error C2220: the following warning is treated as an error [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): warning C4244: 'return': conversion from '_Rep' to 'double', possible loss of data [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): warning C4244:         with [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): warning C4244:         [ [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): warning C4244:             _Rep=__int64 [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
-D:\a\VortexAlpha\VortexAlpha\src\utils\timer.cpp(22,26): warning C4244:         ] [D:\a\VortexAlpha\VortexAlpha\build\vortexalpha_tests.vcxproj]
   Generating Code...
 Error: Process completed with exit code 1.
