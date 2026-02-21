@@ -48,14 +48,11 @@ jobs:
           import os
           tree_output = os.environ["TREE_OUTPUT"]
 
-          # README te ```...``` block er moddhe je "Repository Structure" section ache shekhane replace koro
-          # Pattern: ## Repository Structure theke porer ## heading er age porjonto
-          new_block = f"## Repository Structure\n\n```\n{tree_output}\n```"
+          # ## Repository Structure theke পরের ## heading এর আগে পর্যন্ত replace
+          new_block = f"## Repository Structure\n\n```\n{tree_output}\n```\n"
 
-          pattern = r"(## Repository Structure\s*\n)(.*?)(?=\n## |\Z)"
-          replacement = new_block + "\n"
-
-          new_content, count = re.subn(pattern, replacement, content, flags=re.DOTALL)
+          pattern = r"## Repository Structure\s*\n[\s\S]*?(?=\n## |\Z)"
+          new_content, count = re.subn(pattern, new_block, content)
 
           if count == 0:
               print("WARNING: 'Repository Structure' section not found in README.md")
