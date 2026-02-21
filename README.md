@@ -16,26 +16,36 @@ An Akinator-style AI that guesses countries through yes/no questions using a Bay
 ## Repository Structure
 
 ```
-geoai/
-├── backend/          # Flask API — synced to HuggingFace Docker Space
-│   ├── app.py
-│   ├── core/         # Inference engine, question selector, etc.
-│   ├── algorithms/   # Bayesian network, information gain
-│   ├── models/       # Game state, item model
-│   ├── services/     # Firebase service
-│   ├── utils/        # Data loader, logger
-│   ├── data/         # countries.json, questions.json
-│   ├── Dockerfile
-│   └── requirements.txt
-├── frontend/         # Vanilla HTML/CSS/JS
-├── Debug/            # Auto-generated bot test reports
-│   ├── Countries/    # Per-country debug Markdown files
-│   └── REPORT.md     # Summary report
-├── .github/workflows/
-│   ├── sync-backend.yml   # Push backend → HF Spaces on main push
-│   └── bot-test.yml       # Run bot tests when data files change
-├── CHANGELOG.md
-└── LICENSE
+.
+├── .github
+│   └── workflows
+│       └── update-readme-structure.yml
+├── Chessmate Data Prep.ipynb.md
+├── Chessmate_v2_DataPrep.ipynb.md
+├── Chessmate_v2_ResNet_Training.ipynb.md
+├── ENDGAME ORACLE V2.ipynb.md
+├── ENDGAME_ORACLE_V2.ipynb
+├── G-ROADMAP.md
+├── GambitFlow_Opening_Architect.ipynb.md
+├── GambitFlow_Opening_Architect_v2.ipynb
+├── GambitFlow_Synapse_Base_Training.ipynb.md
+├── GambitFlow_Tactical_Forge.ipynb.md
+├── Match_Data_Curator.ipynb
+├── Nexus-Core-container.txt
+├── Plan.md
+├── Prompt.md
+├── README.md
+├── Synapse_Edge_01_DataPrep.ipynb.md
+├── Synapse_Edge_DataSplitter.ipynb.md
+├── TACTICAL_FORGE_V2.ipynb
+├── auth-screen-div.html
+├── big_g_relay.py
+├── build.txt
+├── index.html
+├── official_training.ipynb.md
+├── secrets
+│   └── Service.json
+└── vortexAlpha.md
 ```
 
 ## Setup
