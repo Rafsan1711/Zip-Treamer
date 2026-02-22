@@ -23,6 +23,9 @@ An Akinator-style AI that guesses countries through yes/no questions using a Bay
 ├── Chessmate Data Prep.ipynb.md
 ├── Chessmate_v2_DataPrep.ipynb.md
 ├── Chessmate_v2_ResNet_Training.ipynb.md
+├── Debug
+│   └── Countries
+            └── All-Countries-Debug.md  (115+ country files collapsed)
 ├── ENDGAME ORACLE V2.ipynb.md
 ├── ENDGAME_ORACLE_V2.ipynb
 ├── G-ROADMAP.md
