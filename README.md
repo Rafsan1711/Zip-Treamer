@@ -35,6 +35,7 @@ An Akinator-style AI that guesses countries through yes/no questions using a Bay
 ├── Plan.md
 ├── Prompt.md
 ├── README.md
+├── REPORT.md
 ├── Synapse_Edge_01_DataPrep.ipynb.md
 ├── Synapse_Edge_DataSplitter.ipynb.md
 ├── TACTICAL_FORGE_V2.ipynb
