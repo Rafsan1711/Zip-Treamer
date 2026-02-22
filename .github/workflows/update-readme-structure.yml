@@ -17,10 +17,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      # -------------------------------------------------------
+      # CONDITION 1: Only file Add (A) or Delete (D) hole run
+      # -------------------------------------------------------
       - name: Check if any file was added or deleted
         id: check
         run: |
-          # Last commit e kono file add (A) ba delete (D) hoyeche kina check koro
           CHANGED=$(git diff --name-status HEAD~1 HEAD | awk '$1 == "A" || $1 == "D"' | wc -l)
 
           if [ "$CHANGED" -gt 0 ]; then
@@ -31,51 +33,137 @@ jobs:
             echo "No file add/delete found. Skipping."
           fi
 
-      - name: Generate directory tree
+      # -------------------------------------------------------
+      # CONDITION 2: Debug/Countries/ collapse script prepare
+      # (tree generate er age script ready rakho)
+      # -------------------------------------------------------
+      - name: Write tree collapse script
+        if: steps.check.outputs.has_changes == 'true'
+        run: |
+          cat > /tmp/collapse_tree.py << 'PYEOF'
+import re
+
+with open("/tmp/raw_tree.txt", "r", encoding="utf-8") as f:
+    lines = f.readlines()
+
+result = []
+inside_countries = False
+countries_indent_len = -1
+skipped_count = 0
+placeholder_inserted = False
+
+def get_indent_len(line):
+    count = 0
+    for ch in line:
+        if ch in ('\u2502', ' ', '\u251c', '\u2514', '\u2500'):
+            count += 1
+        else:
+            break
+    return count
+
+for line in lines:
+    s = line.rstrip('\n')
+
+    # "Countries" named directory entry detect koro
+    is_countries_dir = bool(re.search(r'(\u251c\u2500\u2500|\u2514\u2500\u2500)\s+Countries\s*$', s))
+
+    if is_countries_dir:
+        result.append(s)
+        inside_countries = True
+        countries_indent_len = get_indent_len(s)
+        skipped_count = 0
+        placeholder_inserted = False
+        continue
+
+    if inside_countries:
+        current_indent = get_indent_len(s)
+        if current_indent > countries_indent_len:
+            skipped_count += 1
+            if not placeholder_inserted:
+                # Same indent as Countries children, but use placeholder
+                child_prefix = s[:countries_indent_len] + '    '
+                placeholder = f"{child_prefix}\u2514\u2500\u2500 All-Countries-Debug.md  [1 file shown, rest collapsed]"
+                result.append(placeholder)
+                placeholder_inserted = True
+            else:
+                # Update collapsed count in last placeholder
+                result[-1] = re.sub(
+                    r'\[\d+ file.*?\]',
+                    f'[{skipped_count} files collapsed]',
+                    result[-1]
+                )
+            continue
+        else:
+            inside_countries = False
+            countries_indent_len = -1
+
+    result.append(s)
+
+with open("/tmp/processed_tree.txt", "w", encoding="utf-8") as f:
+    f.write('\n'.join(result) + '\n')
+
+print(f"Done. Collapsed {skipped_count} file(s) under Countries/")
+PYEOF
+
+      # -------------------------------------------------------
+      # Generate raw tree, then collapse Countries/
+      # -------------------------------------------------------
+      - name: Generate and process directory tree
         id: tree
         if: steps.check.outputs.has_changes == 'true'
         run: |
           sudo apt-get install -y tree
 
-          TREE_OUTPUT=$(tree -a \
+          # Raw tree file e save koro
+          tree -a \
             --noreport \
             -I '.git|node_modules|__pycache__|*.pyc|.DS_Store|*.egg-info|.env|venv|.venv' \
-            .)
+            . > /tmp/raw_tree.txt
 
+          # Collapse script run koro
+          python3 /tmp/collapse_tree.py
+
+          # Processed output -> GITHUB_OUTPUT
           {
             echo "tree<<EOF"
-            echo "$TREE_OUTPUT"
+            cat /tmp/processed_tree.txt
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
+      # -------------------------------------------------------
+      # README.md er "Repository Structure" section update koro
+      # -------------------------------------------------------
       - name: Update README.md project structure
         if: steps.check.outputs.has_changes == 'true'
         run: |
           python3 << 'PYEOF'
-          import re, os
+import re, os
 
-          with open("README.md", "r", encoding="utf-8") as f:
-              content = f.read()
+with open("README.md", "r", encoding="utf-8") as f:
+    content = f.read()
 
-          tree_output = os.environ["TREE_OUTPUT"]
+tree_output = os.environ["TREE_OUTPUT"]
 
-          new_block = f"## Repository Structure\n\n```\n{tree_output}\n```\n"
+new_block = f"## Repository Structure\n\n```\n{tree_output}\n```\n"
 
-          pattern = r"## Repository Structure\s*\n[\s\S]*?(?=\n## |\Z)"
-          new_content, count = re.subn(pattern, new_block, content)
+pattern = r"## Repository Structure\s*\n[\s\S]*?(?=\n## |\Z)"
+new_content, count = re.subn(pattern, new_block, content)
 
-          if count == 0:
-              print("WARNING: 'Repository Structure' section not found in README.md")
-              exit(1)
+if count == 0:
+    print("WARNING: 'Repository Structure' section not found in README.md")
+    exit(1)
 
-          with open("README.md", "w", encoding="utf-8") as f:
-              f.write(new_content)
+with open("README.md", "w", encoding="utf-8") as f:
+    f.write(new_content)
 
-          print("README.md updated successfully.")
-          PYEOF
+print("README.md updated successfully.")
+PYEOF
         env:
           TREE_OUTPUT: ${{ steps.tree.outputs.tree }}
 
+      # -------------------------------------------------------
+      # Commit & push
+      # -------------------------------------------------------
       - name: Commit and push if changed
         if: steps.check.outputs.has_changes == 'true'
         run: |
