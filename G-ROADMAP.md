@@ -10,9 +10,9 @@ to tumi ekta Roadmap.md banaba zetate lekha thakbe, amra ki banacchi. and onekgu
 6. amra backend e c++ ,python , flask shoho aro onek onek advanced jinish, languages, techs, algorithms use korbo karon eta hobe open source er Continuosly improve hote thakbe bochorer por bochor. license tomar deya lagbe na ami nije banabo GPL v3.
 7. ami github.dev ar VSCode O use korte parbo.
 8. tumi CI CD shoho aro onek onek advanced jinish use korba jeno ami etake fully complete korar por contributors der kache dite pari. onek onekgulo languages O use korba like Docker ar Kubernetes. aro onek onek advanced jinish za company ba open source projects ra kore. amra site keo onek onek shundor and professional korbo.
-9. ar Important kotha. Kono Code improve ba new feature add korte gele Zeno full code jana na lage. kono ekta Feature ba Code Improve korte Shudhu Oi part er Code janlei zeno hoy. Zemon Claude ai ke ami koyek bochor por Full code dite parbo na karon Context full hoye zabe. kintu ami kono specific part er code diye zeno take diye code korate pari, eta zodi kora na zay tahole optional dhore nao.
-10. are ekhane ki Machine Learning er dorkar ache? tahole use Amra kortam. but mone rakhba ze Space er Data kintu sleep korlei hariye zay, shob docs pore niba.
-11. Data Shomoyer sathe sathe Boro korte thakbo.
+10. ar Important kotha. Kono Code improve ba new feature add korte gele Zeno full code jana na lage. kono ekta Feature ba Code Improve korte Shudhu Oi part er Code janlei zeno hoy. Zemon Claude ai ke ami koyek bochor por Full code dite parbo na karon Context full hoye zabe. kintu ami kono specific part er code diye zeno take diye code korate pari, eta zodi kora na zay tahole optional dhore nao.
+11. are ekhane ki Machine Learning er dorkar ache? tahole use Amra kortam. but mone rakhba ze Space er Data kintu sleep korlei hariye zay, shob docs pore niba.
+12. Data Shomoyer sathe sathe Boro korte thakbo.
 ar steps er modhye testing O rakhba debug korte shohoj zeno hoy . Space e 2 vCPU and 16GB RAM. apatoto eta ami eka and friends rai Use korbe. amar etar Name Hobe GuessMyPlace. ar Data manually Github thekei Edit kore Data barano hobe and enhance kora hobe. ar dataset onekvabei generate kora zay,like ai diye aro bivinno vabe, ar data O Modular hobe. to Ok start, ROADMAP.md amake ekta Artifact e diba. abari bolchi, artifact.
 
 # GuessMyPlace - Development Roadmap
