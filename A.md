@@ -1,1394 +1,1021 @@
-# 🚀 VortexFlow AI — Master Build Roadmap Prompt
+# VortexFlow AI — Master Roadmap & Prompt Guide
 ### For Google AI Studio (Gemini) → React + TypeScript + Vite
 
----
-
-## 📌 HOW TO USE THIS FILE
-
-1. Open **Google AI Studio** → **Build** tab
-2. Copy the **current milestone's prompt block** (marked with `### 🔨 PASTE THIS`)
-3. Paste it into AI Studio and let it generate
-4. Preview the output in the live preview panel
-5. When satisfied, type **"next"** to move to the next milestone
-6. Repeat until the full app is built
+> **How to use:** Each Milestone = One response from AI Studio Build.
+> Paste the relevant Milestone section as your prompt. The AI will build that section completely before you move to the next.
+> **Stack:** React 19 + TypeScript + Vite + Firebase Auth + Firebase RTDB + Tailwind CSS + Framer Motion + Google Gemini API
 
 ---
 
-## 🧠 PROJECT OVERVIEW
-
-**Project Name:** VortexFlow AI  
-**Type:** Commercial & Professional AI Chatbot Web Application  
-**Stack:** React 18 + TypeScript + Vite + Firebase (Auth + RTDB) + Google Gemini API  
-**Auth:** Firebase Email/Password + Google OAuth  
-**Database:** Firebase Realtime Database (RTDB)  
-**AI Backend:** Google Gemini API (gemini-1.5-flash / gemini-1.5-pro)  
-**Styling:** Tailwind CSS + Framer Motion  
-**No fake/mock data — all real, realtime Firebase data**  
-**Free tier only — no payments, no Stripe, no subscription walls**
-
----
-
-## 🏗️ ARCHITECTURE OVERVIEW
+## 🎨 Design System (Global — Read Every Milestone)
 
 ```
-VortexFlow AI
-├── Landing Page (/)
-├── Auth Pages (/login, /signup, /forgot-password)
-├── Main Chat App (/chat)
-│   ├── Sidebar (conversation history, new chat, search)
-│   ├── Chat Window (messages, streaming, markdown)
-│   ├── Input Bar (text, voice input UI, file attach UI)
-│   └── Header (user menu, model selector, settings)
-├── Modals
-│   ├── Settings Modal (theme, language, API config)
-│   ├── Profile Modal (edit name, avatar, bio)
-│   ├── Keyboard Shortcuts Modal
-│   ├── Share Chat Modal
-│   ├── Delete Conversation Modal
-│   ├── Clear All Chats Modal
-│   ├── Export Chat Modal (JSON/TXT/MD)
-│   ├── Feedback Modal
-│   ├── About Modal
-│   └── New Chat Confirmation Modal
-└── 404 Page
-```
+PRIMARY COLOUR PALETTE (Dark Mode Only):
+  Background:       #0A0A0F  (near-black, deep space)
+  Surface:          #111118  (card/panel bg)
+  Surface-2:        #1A1A24  (elevated surface)
+  Surface-3:        #22222E  (hover states)
+  Border:           #2A2A3A  (subtle dividers)
+  Border-bright:    #3D3D52  (active borders)
 
----
+ACCENT COLOURS:
+  Primary:          #00D4FF  (electric cyan — main brand)
+  Primary-glow:     rgba(0,212,255,0.15)
+  Secondary:        #7B61FF  (deep indigo/blue-violet — NOT pink/violet)
+  Secondary-glow:   rgba(123,97,255,0.15)
+  Accent-warm:      #FF6B35  (ember orange — CTAs, warnings)
+  Success:          #00E5A0  (mint green)
+  Error:            #FF4D6A  (crimson)
+  Warning:          #FFB830  (amber)
 
-## ⚙️ FIREBASE CONFIG (Use this in every milestone that needs Firebase)
+TEXT:
+  text-primary:     #F0F0FF
+  text-secondary:   #9898B8
+  text-muted:       #5C5C7A
 
-```typescript
-// src/lib/firebase.ts
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getDatabase } from "firebase/database";
+GRADIENTS:
+  Brand gradient:   linear-gradient(135deg, #00D4FF 0%, #7B61FF 100%)
+  Hero gradient:    radial-gradient(ellipse at 20% 50%, rgba(0,212,255,0.08) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 20%, rgba(123,97,255,0.08) 0%, transparent 60%)
+  Card shine:       linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%)
 
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  databaseURL: "YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
+FONTS:
+  Heading: 'Inter' (700, 800)
+  Body:    'Inter' (400, 500)
+  Mono:    'JetBrains Mono' (code blocks)
+  Load from Google Fonts
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getDatabase(app);
-export const googleProvider = new GoogleAuthProvider();
-```
+ICONS: Font Awesome 6 Pro (use @fortawesome/react-fontawesome + free solid/regular/brands sets)
 
-> ⚠️ User will replace placeholder values with real Firebase project credentials.
-
----
-
-## 📦 DEPENDENCIES TO INSTALL
-
-```bash
-npm create vite@latest vortexflow-ai -- --template react-ts
-cd vortexflow-ai
-npm install firebase
-npm install react-router-dom
-npm install tailwindcss @tailwindcss/typography postcss autoprefixer
-npm install framer-motion
-npm install react-markdown remark-gfm rehype-highlight
-npm install highlight.js
-npm install react-hot-toast
-npm install lucide-react
-npm install @google/generative-ai
-npm install react-intersection-observer
-npm install date-fns
-npm install uuid
-npm install @types/uuid
-npx tailwindcss init -p
+ANIMATION PRINCIPLES:
+  - Framer Motion for all page transitions (opacity + y: 20 → 0, duration 0.4)
+  - CSS cubic-bezier(0.16, 1, 0.32, 1) for all hovers
+  - Glassmorphism: backdrop-filter: blur(12px), bg rgba(255,255,255,0.04)
+  - Glow effects on interactive elements on hover
+  - No jarring animations, everything smooth and premium
 ```
 
 ---
 
-## 🗄️ FIREBASE RTDB STRUCTURE
+## 📁 Project Structure (Final Vision)
 
-```json
+```
+vortexflow-ai/
+├── public/
+│   └── logo.svg              ← Your AI-generated logo goes here
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── ui/               ← Button, Input, Modal, Badge, Tooltip, etc.
+│   │   ├── chat/             ← ChatWindow, MessageBubble, InputBar, etc.
+│   │   ├── layout/           ← Sidebar, Navbar, Footer
+│   │   └── modals/           ← SettingsModal, ProfileModal, etc.
+│   ├── pages/
+│   │   ├── LandingPage.tsx
+│   │   ├── AuthPage.tsx
+│   │   └── ChatPage.tsx
+│   ├── hooks/                ← useAuth, useChat, useFirebase, useTheme, etc.
+│   ├── lib/
+│   │   ├── firebase.ts
+│   │   ├── gemini.ts
+│   │   └── utils.ts
+│   ├── store/                ← Zustand global state
+│   ├── types/                ← All TypeScript interfaces
+│   ├── styles/               ← global.css, tailwind config
+│   ├── App.tsx
+│   └── main.tsx
+├── index.html
+├── tailwind.config.ts
+├── vite.config.ts
+└── package.json
+```
+
+---
+
+---
+
+# ═══════════════════════════════════════
+# MILESTONE 1 — Project Foundation & Landing Page
+# ═══════════════════════════════════════
+
+## 🎯 PASTE THIS AS YOUR FIRST AI STUDIO PROMPT:
+
+```
+You are an expert React + TypeScript + Vite developer. Build "VortexFlow AI" — a professional AI chatbot platform. This is Milestone 1.
+
+TASK: Set up the complete project foundation and build a stunning, fully animated Landing Page.
+
+─────────────────────────────────────────
+TECH STACK:
+- React 19 + TypeScript + Vite
+- Tailwind CSS v3 (configured with custom design tokens)
+- Framer Motion (animations)
+- React Router DOM v6
+- Font Awesome 6 (@fortawesome/react-fontawesome, @fortawesome/free-solid-svg-icons, @fortawesome/free-brands-svg-icons, @fortawesome/free-regular-svg-icons)
+- Zustand (state management)
+- Firebase v10 (auth + RTDB — config placeholders for now)
+- Google Fonts: Inter (400,500,700,800) + JetBrains Mono (400,500)
+
+─────────────────────────────────────────
+DESIGN SYSTEM (apply globally):
+
+Background:    #0A0A0F
+Surface:       #111118
+Surface-2:     #1A1A24
+Surface-3:     #22222E
+Border:        #2A2A3A
+Border-bright: #3D3D52
+
+Primary:       #00D4FF  (electric cyan)
+Primary-glow:  rgba(0,212,255,0.15)
+Secondary:     #7B61FF  (deep indigo)
+Secondary-glow:rgba(123,97,255,0.15)
+Accent-warm:   #FF6B35  (ember orange)
+Success:       #00E5A0
+Error:         #FF4D6A
+Warning:       #FFB830
+
+text-primary:  #F0F0FF
+text-secondary:#9898B8
+text-muted:    #5C5C7A
+
+Brand gradient: linear-gradient(135deg, #00D4FF 0%, #7B61FF 100%)
+NO pink, NO violet-pink. Dark mode ONLY. Premium quality like Claude/ChatGPT/Perplexity dark UI.
+
+─────────────────────────────────────────
+FILES TO CREATE:
+
+1. package.json — all dependencies listed above
+2. vite.config.ts — path aliases (@/ → src/)
+3. tailwind.config.ts — full custom config with all design tokens as CSS variables + Tailwind extensions
+4. index.html — Google Fonts import, Font Awesome kit, base meta tags for VortexFlow AI
+5. src/main.tsx — app entry
+6. src/App.tsx — React Router setup with routes: / (Landing), /auth (Auth), /chat (Chat — placeholder for now)
+7. src/styles/global.css — CSS variables, scrollbar styling, base resets, glassmorphism utility classes
+8. src/types/index.ts — TypeScript interfaces: User, Message, Chat, ChatSettings, Model, etc.
+9. src/lib/firebase.ts — Firebase init with ENV variable placeholders (import.meta.env.VITE_FIREBASE_*)
+10. src/lib/utils.ts — cn() classname util, formatDate, truncateText, generateId helpers
+11. src/store/useAppStore.ts — Zustand store: user, chats, activeChat, settings, ui state (sidebar open, modal states)
+
+12. src/pages/LandingPage.tsx — FULL LANDING PAGE (described below)
+
+─────────────────────────────────────────
+LANDING PAGE — FULL SPEC:
+
+The landing page must be world-class, scroll-based animated, premium dark UI. Sections:
+
+[A] NAVBAR (sticky, glassmorphism on scroll):
+- Left: logo.svg (src="/logo.svg") with animated glow pulse on hover, "VortexFlow AI" text in brand gradient
+- Center: Nav links — Features, Pricing (shows "Free" badge), About, Changelog
+- Right: "Sign In" ghost button + "Get Started Free" CTA button (brand gradient bg, orange glow on hover)
+- Mobile: hamburger menu with smooth slide-down drawer
+- On scroll >50px: backdrop-blur glassmorphism effect activates
+
+[B] HERO SECTION:
+- Full viewport height
+- Background: deep space dark + animated radial gradient orbs (cyan top-left, indigo bottom-right) — CSS animated, not canvas
+- Floating badge: "✦ Powered by Google Gemini" with subtle pulse
+- H1: "The AI That Thinks  With You" — "Thinks" word has brand gradient text + subtle glow
+- Subheadline: "VortexFlow AI brings you next-generation conversations — intelligent, fast, and beautifully designed. Start for free, no credit card needed."
+- Two CTAs: "Start Chatting Free →" (primary, brand gradient) + "See How It Works" (ghost)
+- Animated hero mockup below: a fake-but-realistic chat UI preview (3-4 static message bubbles, typewriter effect on last AI message), framed in a sleek dark card with gradient border
+- Scroll-down indicator: animated chevron
+
+[C] FEATURES SECTION ("Everything you need, nothing you don't"):
+- 6 feature cards in 3x2 grid (responsive)
+- Glassmorphism cards with gradient border on hover + icon glow
+- Features:
+  1. ⚡ Lightning Fast — Sub-second responses powered by Gemini Flash
+  2. 🧠 Context Memory — Remembers your full conversation history
+  3. 🔒 Private & Secure — Firebase Auth, your data stays yours
+  4. 💻 Code Intelligence — Syntax highlighting, copy button, language detection
+  5. 🌐 Real-time Sync — Chats sync instantly across all your devices
+  6. 🎨 Beautiful UI — Dark mode premium interface, built for focus
+- Stagger animation on scroll into view (Framer Motion useInView)
+
+[D] HOW IT WORKS ("Three steps to smarter conversations"):
+- Horizontal 3-step flow with connecting animated line
+- Step 1: Create Account (icon: user-plus)
+- Step 2: Start a Chat (icon: comments)
+- Step 3: Get Instant AI Answers (icon: bolt)
+- Each step has number badge, icon, title, description
+
+[E] STATS BAR (full-width, dark surface-2):
+- 4 animated counters (count up on scroll into view):
+  - "10M+" Conversations
+  - "99.9%" Uptime
+  - "<1s" Response Time
+  - "100%" Free Forever*
+- Subtle gradient dividers between stats
+
+[F] TESTIMONIALS ("Loved by curious minds"):
+- 3 testimonial cards, horizontal scroll on mobile
+- Glassmorphism cards, star ratings, avatar placeholder with gradient initials
+- Real-looking names, realistic short testimonials about the AI chat experience
+
+[G] CTA BANNER:
+- Full-width section, brand gradient background (subtle, not garish)
+- "Ready to think bigger?" headline
+- "Join thousands already using VortexFlow AI for free"
+- Big "Get Started — It's Free →" button
+
+[H] FOOTER:
+- Logo + tagline
+- Links: Features, Privacy Policy, Terms of Service, Contact
+- Social icons (Twitter/X, GitHub, Discord) using Font Awesome brands
+- "© 2025 VortexFlow AI. Built with ♥ and Gemini."
+- Subtle top border gradient
+
+─────────────────────────────────────────
+ANIMATION REQUIREMENTS:
+- Framer Motion: stagger children, fade+slide up on scroll (useInView)
+- Hero orbs: CSS keyframe animation (float + pulse)
+- Navbar: smooth bg transition on scroll (useState + useEffect)
+- Feature cards: scale(1.02) + border glow on hover
+- CTA buttons: glow pulse on hover, scale on click
+- Stat counters: count-up animation when in viewport
+- All transitions: cubic-bezier(0.16, 1, 0.32, 1)
+
+─────────────────────────────────────────
+IMPORTANT RULES:
+- TypeScript strict mode, no `any`
+- All components properly typed
+- Mobile responsive (Tailwind breakpoints)
+- No placeholder "lorem ipsum" — use real VortexFlow AI copy
+- No pink/violet-pink colours anywhere
+- Dark mode only — no light mode toggle needed yet
+- The logo at /logo.svg will be placed by the user — use an <img> tag with fallback
+- Leave /auth and /chat as simple placeholder pages for now ("Coming in Milestone 2/3")
+- Export everything properly, clean file structure
+
+Build everything now. Output all files completely.
+```
+
+---
+
+---
+
+# ═══════════════════════════════════════
+# MILESTONE 2 — Authentication System
+# ═══════════════════════════════════════
+
+## 🎯 PASTE THIS AS YOUR MILESTONE 2 PROMPT:
+
+```
+Continue building "VortexFlow AI". This is Milestone 2. The project foundation and Landing Page from Milestone 1 already exist. Do not rebuild them — only add/modify the specified files.
+
+TASK: Build the complete Authentication System with a beautiful Auth Page.
+
+─────────────────────────────────────────
+AUTH PROVIDERS (Firebase):
+- Email + Password (with email verification flow)
+- Google OAuth (Sign in with Google)
+
+─────────────────────────────────────────
+FILES TO CREATE/MODIFY:
+
+1. src/lib/firebase.ts — Complete Firebase init:
+   - Firebase Auth (getAuth, GoogleAuthProvider)
+   - Firebase RTDB (getDatabase)
+   - All using import.meta.env.VITE_FIREBASE_* env vars
+   - Export: auth, db, googleProvider
+
+2. src/hooks/useAuth.ts — Custom hook:
+   - onAuthStateChanged listener
+   - signInWithEmail(email, pass)
+   - signUpWithEmail(email, pass, displayName)
+   - signInWithGoogle()
+   - signOut()
+   - sendEmailVerification()
+   - resetPassword(email)
+   - Returns: { user, loading, error }
+   - After sign-in: write user profile to RTDB at users/{uid}
+
+3. src/components/ui/Input.tsx — Reusable input:
+   - label, placeholder, type, error, icon (FA), rightIcon props
+   - Dark styled, focus ring in primary cyan, error state in red
+
+4. src/components/ui/Button.tsx — Reusable button:
+   - variants: primary (brand gradient), secondary (ghost), danger, outline
+   - size: sm, md, lg
+   - loading state (spinner icon)
+   - icon support (left/right)
+
+5. src/pages/AuthPage.tsx — FULL AUTH PAGE:
+
+   Layout: Split screen on desktop (left: branding panel, right: form)
+   Mobile: Single column, form only
+
+   LEFT PANEL (desktop only, ~45% width):
+   - Brand gradient background (subtle, dark)
+   - Animated floating orbs (same as hero)
+   - Logo + "VortexFlow AI"
+   - Tagline: "Your AI. Your conversations. Your control."
+   - 3 feature bullet points with FA icons:
+     ✓ Free forever, no credit card
+     ✓ Powered by Google Gemini
+     ✓ Sync across all devices
+   - Bottom: real user testimonial card (glassmorphism)
+
+   RIGHT PANEL (form area):
+   - Glassmorphism card, centered
+   - Tabs: "Sign In" | "Sign Up" (smooth animated underline indicator)
+   
+   SIGN IN TAB:
+   - "Welcome back" heading
+   - Google Sign In button (full width, white bg, Google icon, dark text "Continue with Google")
+   - Divider: "── or continue with email ──"
+   - Email input (with envelope icon)
+   - Password input (with lock icon + show/hide toggle eye icon)
+   - "Forgot password?" link (right aligned, opens forgot password view)
+   - Sign In button (primary, full width, loading state)
+   - Bottom: "Don't have an account? Sign up →"
+
+   SIGN UP TAB:
+   - "Create your account" heading
+   - Google Sign Up button
+   - Divider
+   - Full Name input (user icon)
+   - Email input
+   - Password input + strength indicator bar (weak/fair/strong/very strong with colour)
+   - Confirm Password input
+   - Terms checkbox: "I agree to Terms of Service and Privacy Policy"
+   - Create Account button (primary, full width, loading state)
+   - Bottom: "Already have an account? Sign in →"
+
+   FORGOT PASSWORD VIEW (animated slide-in):
+   - "Reset your password" heading
+   - Email input
+   - Send Reset Email button
+   - Success state: green checkmark animation + "Check your inbox" message
+   - Back to Sign In link
+
+   EMAIL VERIFICATION BANNER (shown after signup before verification):
+   - Full-width amber warning banner
+   - "Please verify your email. Resend email" link
+   - Dismiss button
+
+   ERROR HANDLING:
+   - Firebase error codes mapped to human-readable messages
+   - Inline error display under inputs
+   - Toast notification for success states
+
+6. src/components/ui/Toast.tsx — Toast notification system:
+   - Types: success, error, warning, info
+   - Auto-dismiss (configurable duration)
+   - Stack multiple toasts (bottom-right)
+   - FA icons per type
+   - Framer Motion slide-in/out
+
+7. src/store/useAppStore.ts — ADD:
+   - toasts array + addToast, removeToast actions
+   - authLoading state
+
+8. src/App.tsx — MODIFY:
+   - Protected route logic: /chat requires auth, redirect to /auth if not
+   - If already authed and visiting /auth, redirect to /chat
+   - Show full-page loading spinner during auth state check
+
+─────────────────────────────────────────
+ANIMATIONS:
+- Tab switch: Framer Motion AnimatePresence for form content
+- Forgot password: slide-in from right
+- Google button: subtle scale on hover + shadow
+- Password strength bar: animated width transition
+- Form fields: shake animation on error submit
+- Success checkmark: stroke draw animation (SVG)
+
+─────────────────────────────────────────
+IMPORTANT:
+- After successful auth (any method), navigate to /chat
+- Store user in Zustand store
+- RTDB user node structure:
+  users/{uid}: { uid, displayName, email, photoURL, createdAt, lastSeen, plan: "free" }
+- No pink/violet-pink. Premium dark UI consistent with Landing Page.
+- All TypeScript strict, no `any`.
+
+Build all specified files completely.
+```
+
+---
+
+---
+
+# ═══════════════════════════════════════
+# MILESTONE 3 — Main Chat Interface (Core)
+# ═══════════════════════════════════════
+
+## 🎯 PASTE THIS AS YOUR MILESTONE 3 PROMPT:
+
+```
+Continue building "VortexFlow AI". This is Milestone 3. Milestones 1 and 2 are complete (Landing Page + Auth). Do not rebuild them.
+
+TASK: Build the core Chat Interface — the main application shell, sidebar, and chat window.
+
+─────────────────────────────────────────
+FILES TO CREATE/MODIFY:
+
+1. src/lib/gemini.ts — Google Gemini API integration:
+   - Uses import.meta.env.VITE_GEMINI_API_KEY
+   - GoogleGenerativeAI SDK (@google/generative-ai)
+   - Model: gemini-2.0-flash (default), also support gemini-1.5-pro
+   - sendMessage(messages: Message[], settings: ChatSettings): AsyncGenerator (streaming)
+   - Uses streaming (generateContentStream)
+   - System prompt support
+   - Token counting helper
+
+2. src/hooks/useChat.ts — Chat management hook:
+   - createNewChat(title?: string): string (returns chatId)
+   - sendMessage(chatId, content): Promise<void>
+   - deleteChat(chatId): Promise<void>
+   - updateChatTitle(chatId, title): Promise<void>
+   - Streaming response handling (token by token)
+   - All data persisted to Firebase RTDB:
+     chats/{uid}/{chatId}: { id, title, createdAt, updatedAt, messageCount, model }
+     messages/{uid}/{chatId}/{msgId}: { id, role, content, timestamp, tokens }
+   - Auto-generate chat title from first message (first 40 chars)
+   - Real-time listener for chat list (onValue)
+
+3. src/components/layout/Sidebar.tsx — Left sidebar:
+   WIDTH: 260px (collapsible to 0 on mobile, 60px icon-only mode on desktop toggle)
+   
+   TOP SECTION:
+   - Logo + "VortexFlow AI" (hidden in icon-only mode)
+   - "New Chat" button (brand gradient, FA plus icon, full width)
+   - Collapse toggle button (FA chevron icon)
+   
+   MIDDLE SECTION (scrollable chat list):
+   - Search bar to filter chats (FA magnifying glass icon)
+   - Chat groups by date: "Today", "Yesterday", "Previous 7 Days", "Older"
+   - Each chat item:
+     - Title (truncated, 1 line)
+     - Timestamp (relative: "2h ago")
+     - Hover: show edit (pencil) + delete (trash) icon buttons
+     - Active state: brand gradient left border + bg highlight
+     - Click: navigate/open that chat
+   - Empty state: "No chats yet. Start a new conversation!"
+   - Smooth skeleton loading state while chats load
+
+   BOTTOM SECTION:
+   - User avatar (from Google photoURL or gradient initials fallback)
+   - User name + email (truncated)
+   - Plan badge: "Free" (amber outline)
+   - Settings gear icon button (opens Settings Modal)
+   - Sign out button (FA arrow-right-from-bracket icon)
+
+4. src/components/layout/ChatLayout.tsx — Main layout wrapper:
+   - Flex row: Sidebar + Main area
+   - Mobile overlay sidebar (backdrop blur overlay when open)
+   - Responsive breakpoints
+
+5. src/pages/ChatPage.tsx — Chat page router:
+   - URL: /chat (new chat) + /chat/:chatId (specific chat)
+   - Renders ChatLayout with correct chatId
+   - If no chatId, show welcome screen
+   - React Router useParams for chatId
+
+6. src/components/chat/WelcomeScreen.tsx — Shown when no chat is active:
+   - Center of screen
+   - Logo (animated glow)
+   - "How can I help you today?" heading
+   - 4 suggestion cards in 2x2 grid:
+     - "Explain quantum computing simply"
+     - "Write a Python web scraper"
+     - "Help me plan my week"
+     - "What's the history of the internet?"
+   - Clicking a suggestion starts a new chat with that as the first message
+   - Each card: glassmorphism, FA icon, hover glow
+
+7. src/components/chat/ChatWindow.tsx — Main chat display:
+   - Scrollable message list (auto-scroll to bottom on new message)
+   - Message grouping (consecutive same-role messages)
+   - Auto-scroll with smart behavior (don't force scroll if user scrolled up)
+   - "Scroll to bottom" FAB button (appears when scrolled up)
+   - Empty chat: show minimal centered prompt hint
+
+8. src/components/chat/MessageBubble.tsx — Individual message:
+   USER MESSAGES:
+   - Right-aligned (or left with distinct bg)
+   - Surface-2 background, rounded corners
+   - Edit button on hover (pencil FA icon)
+   - Copy button on hover
+
+   AI MESSAGES:
+   - Left-aligned, no background bubble (clean, like Claude/Perplexity)
+   - VortexFlow logo/avatar icon left
+   - Markdown rendering (react-markdown + remark-gfm)
+   - Code blocks: syntax highlighted (react-syntax-highlighter, Dracula theme or dark theme)
+   - Code block header: language label + copy button
+   - Inline code: styled monospace
+   - Tables: styled dark theme
+   - Lists, blockquotes: properly styled
+   - Streaming: show text as it arrives, blinking cursor at end
+   - Action bar below (appears on hover): Copy, Regenerate, Like 👍, Dislike 👎
+   - Token count (small, muted, below message)
+
+   SYSTEM MESSAGES (errors, info):
+   - Centered, amber/red styling
+
+9. src/components/chat/InputBar.tsx — Message input area:
+   - Sticky at bottom
+   - Glassmorphism background
+   - Textarea (auto-resize, max 200px height, min 1 line)
+   - Placeholder: "Message VortexFlow AI..."
+   - Left icons: FA paperclip (disabled, "coming soon" tooltip), FA microphone (disabled)
+   - Right: Character/token counter (shows when >100 chars) + Send button
+   - Send button: brand gradient, FA paper-plane icon, disabled when empty/loading
+   - Enter = send, Shift+Enter = new line
+   - Loading state: pulsing stop button (FA square icon) to cancel streaming
+   - Below input: "VortexFlow AI can make mistakes. Verify important info." in muted text
+   - Model selector badge (shows current model, clickable — opens model picker)
+
+10. src/components/ui/TypingIndicator.tsx:
+    - 3 animated dots (bounce stagger)
+    - Shown while waiting for first streaming token
+
+─────────────────────────────────────────
+FIREBASE RTDB STRUCTURE:
+```
 {
   "users": {
-    "$uid": {
-      "displayName": "string",
-      "email": "string",
-      "photoURL": "string | null",
-      "bio": "string",
-      "createdAt": "timestamp",
-      "lastSeen": "timestamp",
-      "preferences": {
-        "theme": "dark | light | system",
-        "language": "en",
-        "model": "gemini-1.5-flash | gemini-1.5-pro",
-        "streamingEnabled": true,
-        "soundEnabled": false,
-        "fontSize": "sm | md | lg"
-      },
-      "stats": {
-        "totalChats": 0,
-        "totalMessages": 0,
-        "joinedAt": "timestamp"
-      }
+    "{uid}": { "displayName": "", "email": "", "plan": "free", ... }
+  },
+  "chats": {
+    "{uid}": {
+      "{chatId}": { "id": "", "title": "", "createdAt": 0, "updatedAt": 0, "model": "gemini-2.0-flash", "messageCount": 0 }
     }
   },
-  "conversations": {
-    "$uid": {
-      "$conversationId": {
-        "id": "string",
-        "title": "string",
-        "createdAt": "timestamp",
-        "updatedAt": "timestamp",
-        "model": "gemini-1.5-flash",
-        "messageCount": 0,
-        "isPinned": false,
-        "messages": {
-          "$messageId": {
-            "id": "string",
-            "role": "user | assistant",
-            "content": "string",
-            "timestamp": "timestamp",
-            "isError": false,
-            "tokens": 0
-          }
-        }
+  "messages": {
+    "{uid}": {
+      "{chatId}": {
+        "{msgId}": { "id": "", "role": "user|assistant", "content": "", "timestamp": 0 }
       }
     }
   }
 }
 ```
 
----
+─────────────────────────────────────────
+IMPORTANT:
+- Streaming must work: tokens appear one by one in real-time
+- react-markdown must render AI responses beautifully
+- Syntax highlighting for code (at minimum: JS, TS, Python, Bash, JSON, HTML, CSS)
+- No pink/violet-pink. Consistent premium dark UI.
+- TypeScript strict, all properly typed.
+- Performance: virtualize message list if >100 messages (react-window or similar)
 
----
-
-# ═══════════════════════════════════════════════
-# MILESTONE 1 — Project Foundation & File Structure
-# ═══════════════════════════════════════════════
-
-### 🔨 PASTE THIS INTO AI STUDIO:
-
-```
-You are building VortexFlow AI — a professional, commercial-grade AI Chatbot web application using React 18 + TypeScript + Vite + Tailwind CSS + Firebase + Google Gemini API. This is Milestone 1.
-
-TASK: Create the complete project foundation with all configuration files, folder structure, global styles, theme system, and base utilities.
-
-CREATE THE FOLLOWING FILES:
-
-1. `vite.config.ts` — with path aliases (@/), env support
-2. `tsconfig.json` — strict mode, path aliases
-3. `tailwind.config.ts` — custom colors for VortexFlow brand (deep purples, electric blues, dark grays), dark/light mode via class, custom animations, custom fonts
-4. `postcss.config.js`
-5. `index.html` — proper meta tags, Open Graph, title "VortexFlow AI", favicon emoji ⚡, Google Fonts (Inter + JetBrains Mono)
-6. `src/index.css` — Tailwind directives + global CSS variables for both dark/light themes, custom scrollbar styles, selection styles, base resets
-7. `src/main.tsx` — App entry with React.StrictMode
-8. `src/App.tsx` — Router setup with React Router v6, protected routes, lazy loading for all pages
-9. `src/lib/firebase.ts` — Firebase init with Auth + RTDB + GoogleAuthProvider (with placeholder config)
-10. `src/lib/gemini.ts` — Google Generative AI init, streamMessage function, generateTitle function
-11. `src/store/` — Create these Zustand-like context stores using React Context + useReducer:
-    - `AuthContext.tsx` — user state, loading, error
-    - `ChatContext.tsx` — conversations, active conversation, messages, streaming state
-    - `UIContext.tsx` — theme, sidebar open/close, active modal, toast queue
-    - `PreferencesContext.tsx` — model selection, font size, sound, streaming toggle
-12. `src/types/index.ts` — ALL TypeScript interfaces:
-    - User, UserPreferences, UserStats
-    - Conversation, Message, MessageRole
-    - ModelOption, Theme, FontSize
-    - ModalType enum
-    - AppError
-13. `src/utils/` — utility files:
-    - `cn.ts` — classname merger utility
-    - `formatDate.ts` — date formatting with date-fns
-    - `generateId.ts` — UUID wrapper
-    - `truncate.ts` — string truncation
-    - `exportChat.ts` — export to JSON, TXT, MD formats
-    - `generateChatTitle.ts` — extract title from first message
-14. `src/hooks/` — custom hooks:
-    - `useAuth.ts`
-    - `useChat.ts`
-    - `useTheme.ts`
-    - `useModal.ts`
-    - `useLocalStorage.ts`
-    - `useDebounce.ts`
-    - `useScrollToBottom.ts`
-    - `useKeyboard.ts` — keyboard shortcut handler
-15. `src/constants/index.ts` — APP_NAME, MODELS array with labels, KEYBOARD_SHORTCUTS object, MAX_MESSAGE_LENGTH, DEFAULT_PREFERENCES, SYSTEM_PROMPT for Gemini
-
-BRAND COLORS for Tailwind config:
-- Primary: #7C3AED (violet-600) → #9333EA (purple-600)
-- Accent: #06B6D4 (cyan-500)
-- Dark bg: #0A0A0F (near black)
-- Dark surface: #111118
-- Dark card: #1A1A26
-- Dark border: #2A2A3A
-- Light bg: #F8F7FF
-- Light surface: #FFFFFF
-- Text primary dark: #F0EDFF
-- Text secondary dark: #9B97B0
-
-SYSTEM PROMPT constant:
-"You are VortexFlow AI, a highly capable, helpful, and professional AI assistant. You provide accurate, thoughtful, and well-structured responses. You support markdown formatting including code blocks, tables, lists, and more. Be conversational yet precise."
-
-After creating all files, show a complete working src/ folder tree. The app should compile with `npm run dev` without errors. Show ALL file contents completely — do not truncate any file.
+Build all specified files completely.
 ```
 
 ---
 
-# ═══════════════════════════════════════════════
-# MILESTONE 2 — Landing Page (Full Professional)
-# ═══════════════════════════════════════════════
+---
 
-### 🔨 PASTE THIS INTO AI STUDIO:
+# ═══════════════════════════════════════
+# MILESTONE 4 — Modals & Settings System
+# ═══════════════════════════════════════
+
+## 🎯 PASTE THIS AS YOUR MILESTONE 4 PROMPT:
 
 ```
-Continuing VortexFlow AI build. This is Milestone 2: Landing Page.
+Continue building "VortexFlow AI". This is Milestone 4. Milestones 1-3 complete.
 
-Using the foundation from Milestone 1 (React 18 + TypeScript + Vite + Tailwind CSS + Framer Motion), build a stunning, professional, fully animated landing page at route `/`.
+TASK: Build all modal components and the complete settings system.
 
-CREATE: `src/pages/LandingPage.tsx` and all required sub-components in `src/components/landing/`
+─────────────────────────────────────────
+BASE MODAL SYSTEM:
 
-LANDING PAGE SECTIONS (in order):
+src/components/ui/Modal.tsx — Base modal wrapper:
+- Framer Motion AnimatePresence (scale + opacity: 0.95→1)
+- Backdrop: rgba(0,0,0,0.7) blur(4px)
+- Glassmorphism card container
+- Close on backdrop click + ESC key
+- Sizes: sm (400px), md (560px), lg (720px), xl (900px), full
+- Header: title + optional subtitle + close X button
+- Body: scrollable content area
+- Footer: optional action buttons slot
+- Portal rendered (React createPortal to document.body)
+- Focus trap inside modal
 
-1. **Navbar** (`LandingNavbar.tsx`)
-   - Logo: "⚡ VortexFlow AI" with gradient text (purple to cyan)
-   - Nav links: Features, How It Works, FAQ
-   - CTA buttons: "Sign In" (ghost) and "Get Started Free" (gradient primary)
-   - Glassmorphism background on scroll (backdrop-blur, border-bottom)
-   - Hamburger menu for mobile, animated drawer
-   - Sticky top, z-50
-   - Smooth scroll to sections
+─────────────────────────────────────────
+MODALS TO BUILD:
 
-2. **Hero Section** (`HeroSection.tsx`)
-   - Large gradient headline: "The AI That Thinks\nWith You, Not For You"
-   - Subheadline: "VortexFlow AI combines the power of Google Gemini with a beautiful, distraction-free interface. Have real conversations, get real answers."
-   - Two CTA buttons: "Start Chatting Free →" (large gradient) + "See How It Works" (ghost)
-   - Animated floating badge: "⚡ Powered by Google Gemini"
-   - Hero visual: Animated mock chat window showing a sample conversation (hardcoded, looks real)
-   - The mock chat shows messages typing in with a typewriter animation
-   - Background: Dark with animated gradient orbs (purple + cyan), subtle grid pattern
-   - Particle-like floating dots in background using CSS animation
-   - Full viewport height
+1. src/components/modals/SettingsModal.tsx (lg size):
+   Tabbed layout (left vertical tabs, right content):
 
-3. **Stats Bar** (`StatsBar.tsx`)
-   - 4 animated counter stats: "10K+ Conversations", "99.9% Uptime", "< 1s Response", "100% Free"
-   - Dark glassmorphism cards, gradient numbers
-   - Animate counters up when in viewport (Intersection Observer)
+   TAB 1 — General:
+   - Interface Language (dropdown, English only for now)
+   - Default AI Model (dropdown: Gemini 2.0 Flash ⚡ / Gemini 1.5 Pro 🧠)
+   - Response Language (Auto / English / other options)
+   - Chat font size (Small / Medium / Large — preview text shown)
+   - Show token count toggle
+   - Show timestamps toggle
+   - Auto-scroll to bottom toggle
+   - Save changes button
 
-4. **Features Section** (`FeaturesSection.tsx`)
-   - Section title: "Everything You Need in an AI Assistant"
-   - 6 feature cards in a 3x2 grid:
-     * ⚡ Lightning Fast — Streaming responses powered by Gemini
-     * 🧠 Context Aware — Remembers your full conversation
-     * 📝 Rich Markdown — Code, tables, lists rendered beautifully
-     * 🔒 Private & Secure — Firebase auth, your data stays yours
-     * 💾 Chat History — All conversations saved and searchable
-     * 🎨 Beautiful UI — Dark/light mode, customizable experience
-   - Each card: icon, title, description, subtle hover glow animation
-   - Staggered entrance animation with Framer Motion
+   TAB 2 — AI Behaviour:
+   - System Prompt textarea (custom instructions for the AI):
+     - Placeholder: "You are a helpful assistant..."
+     - Character count, max 2000 chars
+     - "Reset to default" link
+   - Creativity / Temperature slider (0.0 → 2.0):
+     - Labels: "Precise" ←→ "Creative"
+     - Current value shown
+   - Max Response Length (Short / Medium / Long / Maximum)
+   - Enable markdown rendering toggle
+   - Code syntax highlighting toggle
+   - Safety settings: dropdown (Default / Strict / Off — with disclaimer)
 
-5. **How It Works** (`HowItWorks.tsx`)
-   - Section title: "Get Started in Seconds"
-   - 3 steps with large step numbers, icons, title, description:
-     1. Create Account — Sign up free with email or Google
-     2. Start a Chat — Type anything, ask anything
-     3. Get Answers — Streaming AI responses with full markdown
-   - Connected by animated dashed line
-   - Alternating layout on desktop
+   TAB 3 — Account:
+   - Profile picture (circle, shows Google avatar or gradient initials)
+   - Display name (editable input + save)
+   - Email (read-only, badge "Verified" or "Unverified")
+   - Password section (only for email users): "Change Password" button → sub-form
+   - Danger Zone (red border card):
+     - "Delete all chat history" button (confirm modal)
+     - "Delete Account" button (confirm modal with email re-entry)
 
-6. **Gemini Showcase** (`GeminiShowcase.tsx`)
-   - "Powered by Google Gemini" section
-   - Show model options: Gemini 1.5 Flash (fast, efficient) and Gemini 1.5 Pro (powerful, complex)
-   - Two comparison cards showing speed vs power trade-off
-   - Gemini branding colors subtly included
+   TAB 4 — About & Help:
+   - App version
+   - Links: Documentation, Report a Bug, Feature Request, Privacy Policy, Terms of Service
+   - Keyboard shortcuts reference table:
+     | Ctrl+K | New Chat |
+     | Ctrl+B | Toggle Sidebar |
+     | Ctrl+, | Open Settings |
+     | Esc    | Close Modal |
+     | Enter  | Send Message |
+     | Shift+Enter | New Line |
+   - "Built with ♥ using React + Firebase + Gemini" credit
 
-7. **FAQ Section** (`FAQSection.tsx`)
-   - Section title: "Frequently Asked Questions"
-   - 8 FAQ items as animated accordion:
-     1. Is VortexFlow AI really free? — Yes, completely free. No credit card required.
-     2. What AI model powers VortexFlow? — Google Gemini 1.5 (Flash and Pro)
-     3. Is my data private? — Yes, stored securely in Firebase, only you can access your chats
-     4. Can I export my conversations? — Yes, export as JSON, TXT, or Markdown
-     5. Is there a message limit? — Fair use policy, no hard limits on free tier
-     6. Does it support code? — Yes, full syntax highlighting for 100+ languages
-     7. Can I use it on mobile? — Yes, fully responsive on all devices
-     8. How do I sign in? — Email/password or Google OAuth, both supported
-   - Smooth accordion open/close animation
+2. src/components/modals/ProfileModal.tsx (md size):
+   - Large avatar display
+   - Name, email, member since date
+   - Plan: "Free" badge with amber glow
+   - Stats: Total Chats, Total Messages, Days Active
+   - Quick links: Edit Profile → opens Settings Account tab, Sign Out
+   - Activity graph (simple 7-day bar chart using CSS bars, no library needed)
 
-8. **CTA Banner** (`CTABanner.tsx`)
-   - Dark gradient background (purple to cyan gradient)
-   - Headline: "Ready to Experience AI That Understands You?"
-   - Subtext: "Join thousands of users. Free forever. No credit card needed."
-   - Large "Start for Free →" button
-   - Animated background glow
+3. src/components/modals/ModelPickerModal.tsx (md size):
+   - Title: "Choose AI Model"
+   - Model cards (selectable):
+     Card 1: ⚡ Gemini 2.0 Flash
+       - Speed: ████████░░ Fast
+       - Quality: ███████░░░ High
+       - Best for: Quick answers, coding, general use
+       - Badge: "Recommended" (cyan)
+     Card 2: 🧠 Gemini 1.5 Pro  
+       - Speed: ██████░░░░ Moderate
+       - Quality: ██████████ Excellent
+       - Best for: Complex reasoning, long documents, deep analysis
+       - Badge: "Most Capable"
+   - Selected state: brand gradient border + glow
+   - "Apply to this chat" + "Set as default" checkboxes
+   - Confirm button
 
-9. **Footer** (`LandingFooter.tsx`)
-   - Logo + tagline
-   - Links: Privacy Policy (placeholder), Terms (placeholder), Contact (placeholder)
-   - "Built with ❤️ using Google Gemini API"
-   - Copyright: © 2025 VortexFlow AI. All rights reserved.
-   - Social icons (Twitter/X, GitHub) — placeholder links
+4. src/components/modals/DeleteConfirmModal.tsx (sm size):
+   - Warning icon (red, FA triangle-exclamation, animated shake)
+   - Title + description (configurable via props)
+   - Optional: type-to-confirm input (for destructive actions)
+   - Cancel (ghost) + Delete/Confirm (danger red) buttons
+   - Loading state on confirm
 
-REQUIREMENTS:
-- Framer Motion for ALL section entrance animations (fadeInUp, staggerChildren)
-- Fully responsive (mobile, tablet, desktop)
-- Dark theme by default (matching overall app theme)
-- All text, icons, colors consistent with brand (purple/cyan/dark)
-- Smooth scroll behavior
-- React Router Links for auth buttons pointing to /login and /signup
-- No images — use emojis, icons (lucide-react), CSS gradients only
-- Performance: use `loading="lazy"` and `will-change` where needed
+5. src/components/modals/ChatRenameModal.tsx (sm size):
+   - "Rename Chat" title
+   - Input pre-filled with current title
+   - Auto-focus + select all text
+   - Enter to save, Esc to cancel
+   - Save button (primary)
 
-Show ALL component files completely. Do not truncate.
+6. src/components/modals/ShareChatModal.tsx (md size):
+   - "Share Conversation" title
+   - Generate shareable link (stored in RTDB under shared/{shareId})
+   - Copy link button (icon + text, success state "Copied!")
+   - Share options (UI only, not functional yet): Copy Link, Twitter/X, WhatsApp
+   - Privacy note: "Anyone with the link can view this conversation (read-only)"
+   - Expiry: "Link valid for 7 days" (free plan)
+
+7. src/components/modals/KeyboardShortcutsModal.tsx (md size):
+   - Clean table of all keyboard shortcuts
+   - Grouped: Navigation, Chat, Interface
+   - Keys displayed as <kbd> styled chips
+
+8. src/components/modals/WelcomeTourModal.tsx (lg size):
+   - Shown once to new users (tracked in RTDB user node: onboardingComplete: false)
+   - Multi-step tour (5 steps with progress dots):
+     Step 1: Welcome + what VortexFlow AI is
+     Step 2: Starting conversations + suggestion cards
+     Step 3: Using models (Flash vs Pro explanation)
+     Step 4: Settings + customization
+     Step 5: "You're all set!" + confetti animation + "Start Chatting" button
+   - Previous/Next navigation
+   - "Skip tour" option
+
+─────────────────────────────────────────
+ALSO BUILD:
+
+src/components/ui/Dropdown.tsx — Reusable dropdown menu:
+- Trigger element (any child)
+- Items: { label, icon, action, divider, danger, disabled }
+- Right-click or click to open
+- Closes on outside click + ESC
+- Used in: chat item context menu, settings dropdowns
+
+src/components/ui/Tooltip.tsx — Hover tooltip:
+- top/bottom/left/right placement
+- Delay: 500ms show, 0ms hide
+- Dark bg, small text, FA icons support
+
+src/hooks/useKeyboard.ts — Global keyboard shortcuts:
+- Ctrl+K: new chat
+- Ctrl+B: toggle sidebar
+- Ctrl+,: open settings
+- ESC: close any open modal (check modal stack)
+
+─────────────────────────────────────────
+STATE (add to Zustand store):
+- openModal: 'settings' | 'profile' | 'model-picker' | 'delete-confirm' | 'rename' | 'share' | 'shortcuts' | 'welcome-tour' | null
+- modalProps: any (config for delete confirm text, etc.)
+- chatSettings per chatId: { model, temperature, systemPrompt, ... }
+- globalSettings: { defaultModel, fontSize, showTokenCount, showTimestamps, autoScroll }
+
+─────────────────────────────────────────
+- All modals: Framer Motion AnimatePresence entrance/exit
+- Mobile: modals go full-screen on small screens
+- No pink/violet-pink. TypeScript strict.
+Build all specified files completely.
 ```
 
 ---
 
-# ═══════════════════════════════════════════════
-# MILESTONE 3 — Authentication Pages & Firebase Auth
-# ═══════════════════════════════════════════════
+---
 
-### 🔨 PASTE THIS INTO AI STUDIO:
+# ═══════════════════════════════════════
+# MILESTONE 5 — Advanced Chat Features
+# ═══════════════════════════════════════
+
+## 🎯 PASTE THIS AS YOUR MILESTONE 5 PROMPT:
 
 ```
-Continuing VortexFlow AI build. This is Milestone 3: Authentication System.
+Continue building "VortexFlow AI". This is Milestone 5. Milestones 1-4 complete.
 
-Build complete Firebase Authentication with Email/Password and Google OAuth. Create beautiful, professional auth pages.
+TASK: Implement advanced chat features — search, message actions, regeneration, editing, image input, export, and real-time RTDB sync polish.
 
-CREATE THE FOLLOWING:
+─────────────────────────────────────────
+FEATURES TO BUILD:
 
-**Pages:**
-- `src/pages/LoginPage.tsx`
-- `src/pages/SignupPage.tsx`
-- `src/pages/ForgotPasswordPage.tsx`
+1. MESSAGE EDITING (user messages):
+   - Click edit icon on user message → transforms into editable textarea
+   - Save: re-sends from that point, all subsequent messages replaced
+   - Cancel: reverts, no change
+   - RTDB: delete all messages after edited message, re-run AI
 
-**Components in `src/components/auth/`:**
-- `AuthLayout.tsx` — shared wrapper for all auth pages
-- `AuthCard.tsx` — glassmorphism card container
-- `EmailPasswordForm.tsx` — reusable form component
-- `GoogleAuthButton.tsx` — "Continue with Google" button
-- `AuthDivider.tsx` — "— or —" divider
-- `PasswordStrengthBar.tsx` — animated password strength indicator
-- `FormField.tsx` — reusable input with label, error, icon
+2. MESSAGE REGENERATION:
+   - "Regenerate response" button on last AI message action bar
+   - Deletes last AI message, re-runs with same user message
+   - Loading state with TypingIndicator
+   - RTDB updated accordingly
 
-**Auth Context (`src/store/AuthContext.tsx`) — FULL IMPLEMENTATION:**
-```typescript
-// Implement these functions using Firebase Auth:
-- signInWithEmail(email, password)
-- signUpWithEmail(email, displayName, password)
-- signInWithGoogle()
-- signOut()
-- resetPassword(email)
-- updateUserProfile(data)
-- deleteAccount()
-// On auth state change: sync user to Firebase RTDB under /users/$uid
-// Store: displayName, email, photoURL, createdAt, lastSeen, preferences (defaults), stats
-```
+3. GLOBAL CHAT SEARCH:
+   src/components/chat/SearchPanel.tsx:
+   - Trigger: Ctrl+F or search icon in sidebar
+   - Slide-in panel from top (full width, below navbar)
+   - Search input (auto-focus)
+   - Searches across: chat titles + message content (client-side, loaded chats)
+   - Results grouped by chat
+   - Click result: navigate to that chat + scroll to + highlight matching message
+   - Debounced (300ms)
+   - Shows "X results across Y chats"
+   - Esc to close
 
-**LOGIN PAGE:**
-- Left panel (desktop): Brand visual with animated logo, tagline, feature bullets
-- Right panel: Login form
-- Form fields: Email (with validation), Password (toggle show/hide)
-- "Forgot password?" link
-- Submit button with loading spinner
-- Google OAuth button
-- Link to signup
-- Error messages shown as inline field errors + toast
-- On success: redirect to /chat
-- Remember me checkbox (stores in localStorage)
+4. MESSAGE COPY & EXPORT:
+   - Copy button on each message: copies markdown text
+   - Success state: "Copied!" with checkmark (2s)
+   
+   src/components/modals/ExportChatModal.tsx:
+   - Formats: Markdown (.md), Plain Text (.txt), JSON (.json)
+   - Preview of export content
+   - Download button (browser download API)
+   - "Copy to clipboard" alternative
 
-**SIGNUP PAGE:**
-- Left panel: Same brand panel (different tagline)
-- Right panel: Signup form
-- Form fields: Full Name, Email, Password, Confirm Password
-- Real-time password strength bar (Weak/Fair/Strong/Very Strong) based on:
-  * Length ≥ 8
-  * Has uppercase
-  * Has number
-  * Has special char
-- Password requirements checklist (animated checkmarks as you type)
-- Terms checkbox: "I agree to the Terms of Service and Privacy Policy"
-- Submit button with loading
-- Google OAuth button
-- Link to login
-- On success: Create user in Firebase RTDB, redirect to /chat with welcome toast
+5. LIKE / DISLIKE (feedback):
+   - 👍 / 👎 buttons on AI messages
+   - Stores in RTDB: feedback/{uid}/{chatId}/{msgId}: { type: "like"|"dislike", timestamp }
+   - Visual toggle state (filled vs outline FA icons)
+   - Like → brief green particle burst (CSS animation)
+   - Dislike → optional feedback text input (tooltip popup)
 
-**FORGOT PASSWORD PAGE:**
-- Simple centered card
-- Email input
-- Submit sends Firebase resetPassword email
-- Success state: show "Check your inbox!" with animated mail icon
-- Back to login link
+6. IMAGE INPUT:
+   - Paperclip button in InputBar (now enabled for image only)
+   - Accepts: PNG, JPG, WEBP, GIF (max 4MB)
+   - Preview thumbnail in input area with remove X
+   - Sends as multimodal message to Gemini (inline_data base64)
+   - Message displays image above text content
+   - Drag & drop onto chat window also works
+   - Error: file too large, wrong type
 
-**AUTH LAYOUT:**
-- Full page, dark background with animated gradient orbs
-- "⚡ VortexFlow AI" logo top-left links to /
-- Animated entrance for card (slide up + fade)
+7. CHAT CONTEXT MENU (right-click or ··· button on chat item):
+   - Rename
+   - Share
+   - Export
+   - Duplicate (copy all messages to new chat)
+   - Delete (confirm modal)
+   - Pin (pinned chats shown at top of sidebar with 📌)
 
-**PROTECTED ROUTE (`src/components/routing/ProtectedRoute.tsx`):**
-- Check AuthContext for user
-- If loading: show full-page spinner with VortexFlow logo
-- If not authenticated: redirect to /login with `state.from` for redirect back
-- If authenticated: render children
+8. PINNED CHATS:
+   - Pin/unpin from context menu
+   - RTDB: chats/{uid}/{chatId}/pinned: true
+   - Sidebar section "Pinned" at top, separate from date groups
+   - Max 5 pinned chats (free plan)
 
-**PUBLIC ROUTE (`src/components/routing/PublicRoute.tsx`):**
-- If already authenticated: redirect to /chat
-- Otherwise: render children (auth pages)
+9. MESSAGE TIMESTAMPS:
+   - Per-message: show relative time on hover ("3 minutes ago")
+   - Full datetime in tooltip
+   - Toggle in settings (show always / hover only / never)
 
-**FORM VALIDATION (no external library, custom):**
-- Email: regex validation, required
-- Password: min 8 chars, required
-- Display name: min 2 chars, max 50 chars
-- Real-time validation on blur, show errors on submit
+10. REAL-TIME SYNC INDICATOR:
+    - Small status badge in Navbar: 🟢 "Synced" / 🟡 "Syncing..." / 🔴 "Offline"
+    - Firebase onValue listener for connection state (.info/connected)
+    - Offline: input bar shows "You're offline — messages will send when reconnected"
+    - Queue messages offline, flush when reconnected
 
-**Firebase RTDB on signup:**
-```typescript
-// Write to /users/$uid on new account creation:
-{
-  displayName: name,
-  email: email,
-  photoURL: null,
-  bio: "",
-  createdAt: Date.now(),
-  lastSeen: Date.now(),
-  preferences: {
-    theme: "dark",
-    language: "en",
-    model: "gemini-1.5-flash",
-    streamingEnabled: true,
-    soundEnabled: false,
-    fontSize: "md"
-  },
-  stats: {
-    totalChats: 0,
-    totalMessages: 0,
-    joinedAt: Date.now()
-  }
-}
-```
+11. CHAT HEADER (above messages):
+    src/components/chat/ChatHeader.tsx:
+    - Current chat title (click to rename inline)
+    - Model badge (click → ModelPickerModal)
+    - Message count
+    - Action buttons: Export, Share, ··· (more options)
+    - On mobile: hamburger to open sidebar
 
-STYLING:
-- Auth card: glassmorphism (bg-white/5, backdrop-blur-xl, border border-white/10)
-- Inputs: dark bg, subtle border, focus ring in brand purple, icon left side
-- Buttons: gradient purple-to-cyan for primary, white/10 for Google
-- All Framer Motion entrance animations
-- Fully responsive — stacked on mobile, split on desktop
+12. AUTO-TITLE GENERATION:
+    - After first AI response, generate a better title using Gemini:
+      Prompt: "Generate a short 4-6 word title for this conversation. First message: '{msg}'. Respond with only the title."
+    - Update RTDB + sidebar in real-time
 
-Show ALL files completely. Do not truncate.
+13. TOKEN/USAGE DISPLAY:
+    - After each AI response: show "~X tokens" in small muted text
+    - Track per-chat total token usage in RTDB
+    - In ProfileModal: show total tokens used this month
+
+14. CODE BLOCK ENHANCEMENTS:
+    - Language label (top-left of code block)
+    - Copy button (top-right, shows "Copied!" 2s)
+    - Line numbers toggle
+    - "Run in sandbox" placeholder button (disabled, tooltip "Coming soon")
+    - Collapsible for blocks >30 lines (show first 15, "Show more" button)
+
+15. SCROLL BEHAVIOR:
+    - Smart auto-scroll: if user is within 100px of bottom → auto-scroll on new token
+    - If scrolled up: show "↓ New message" FAB
+    - Smooth scroll (behavior: 'smooth')
+
+─────────────────────────────────────────
+PERFORMANCE:
+- Message list: use react-window (VariableSizeList) if >50 messages
+- Images: lazy load with IntersectionObserver
+- Search: debounced + memoized with useMemo
+
+─────────────────────────────────────────
+RTDB UPDATES (additions):
+- chats/{uid}/{chatId}/pinned: boolean
+- messages/{uid}/{chatId}/{msgId}/edited: boolean
+- messages/{uid}/{chatId}/{msgId}/imageUrl: string (base64 or null)
+- feedback/{uid}/{chatId}/{msgId}: { type, timestamp, comment? }
+- shared/{shareId}: { uid, chatId, createdAt, expiresAt, messages: [...] }
+
+No pink/violet-pink. TypeScript strict. Build all specified files.
 ```
 
 ---
 
-# ═══════════════════════════════════════════════
-# MILESTONE 4 — Main Chat Layout & Sidebar
-# ═══════════════════════════════════════════════
-
-### 🔨 PASTE THIS INTO AI STUDIO:
-
-```
-Continuing VortexFlow AI build. This is Milestone 4: Main Chat Layout & Sidebar.
-
-Build the main chat application shell — the layout, sidebar, and header that will house the chat experience.
-
-CREATE:
-
-**Pages:**
-- `src/pages/ChatPage.tsx` — main layout orchestrator
-
-**Components in `src/components/layout/`:**
-- `AppLayout.tsx` — root layout with sidebar + main content
-- `AppHeader.tsx` — top header bar
-- `Sidebar.tsx` — left conversation list sidebar
-- `SidebarHeader.tsx` — logo + new chat button
-- `SidebarSearch.tsx` — search conversations input
-- `ConversationList.tsx` — list of past conversations
-- `ConversationItem.tsx` — single conversation row
-- `ConversationContextMenu.tsx` — right-click menu (rename, pin, delete)
-- `SidebarFooter.tsx` — user avatar + name + settings gear
-
-**APP LAYOUT:**
-- Desktop: Fixed sidebar (280px) + flex-1 main content, side by side
-- Mobile: Sidebar as slide-in drawer (full height, overlay), toggle with hamburger
-- Smooth sidebar open/close animation with Framer Motion
-- Sidebar state persisted in localStorage
-
-**SIDEBAR:**
-- Background: Dark (#111118), left border
-- Header:
-  * Logo "⚡ VortexFlow AI" (small, gradient)
-  * "New Chat" button (full width, gradient, sparkle icon)
-- Search bar:
-  * Searches through conversation titles in real-time
-  * Debounced (300ms)
-  * Shows "No results" state
-- Conversation List:
-  * Grouped by date: "Today", "Yesterday", "This Week", "Older"
-  * Each item: conversation title (truncated), time ago, hover actions
-  * Active conversation highlighted with purple left border + bg
-  * Hover reveals: rename (pencil), pin (pin icon), delete (trash) buttons
-  * Pinned conversations shown at top with 📌 icon
-  * Loading skeleton shimmer while fetching from Firebase
-  * Empty state: "No conversations yet. Start a new chat!"
-  * Virtualized list (manual, using CSS for performance — only show visible items)
-- Footer:
-  * User avatar (circle with initials fallback if no photo)
-  * Display name + email (truncated)
-  * Gear icon → opens Settings modal
-
-**APP HEADER:**
-- Left: Hamburger menu (mobile) / sidebar toggle (desktop) 
-- Center: Current conversation title (editable inline — click to rename)
-- Right:
-  * Model selector dropdown (Gemini 1.5 Flash ⚡ / Gemini 1.5 Pro 🧠)
-  * Export button (opens Export Chat modal)
-  * Share button (opens Share Chat modal)
-  * User avatar button → dropdown menu with: Profile, Settings, Keyboard Shortcuts, About, Sign Out
-
-**MODEL SELECTOR DROPDOWN:**
-- Floating dropdown card (glassmorphism)
-- Option 1: "Gemini 1.5 Flash ⚡" — "Faster responses, great for most tasks"
-- Option 2: "Gemini 1.5 Pro 🧠" — "More powerful, better for complex reasoning"
-- Selected model shown with checkmark + colored badge
-- Changes saved to user preferences in Firebase RTDB
-
-**CONVERSATION ITEM:**
-- Shows: title, relative time (e.g. "2h ago", "Yesterday")
-- Context menu on right-click OR three-dot button on hover:
-  * Rename: inline edit with input
-  * Pin/Unpin: toggles isPinned in RTDB
-  * Delete: opens Delete Conversation modal (confirmation)
-- Optimistic UI: update locally first, then sync to Firebase
-
-**FIREBASE RTDB INTEGRATION:**
-- Listen to /conversations/$uid in real-time (onValue)
-- Sort by updatedAt descending
-- Unsubscribe listener on component unmount
-- Handle loading, error, empty states
-
-**SIDEBAR SEARCH:**
-- Filters conversation list by title (case-insensitive)
-- Shows count: "3 results"
-- Clear button (X) when query is not empty
-- Empty search state with magnifying glass icon
-
-**RESPONSIVE BEHAVIOR:**
-- < 768px: sidebar hidden by default, overlay drawer on open
-- ≥ 768px: sidebar always visible, can be collapsed to icon-only (64px) mode
-- Collapse button on sidebar edge
-- Smooth transition for all states
-
-**LOADING STATES:**
-- Full page loader: VortexFlow logo pulsing animation while auth initializes
-- Skeleton loaders for conversation list
-- Shimmer effect CSS animation
-
-Show ALL files completely. Do not truncate.
-```
-
 ---
 
-# ═══════════════════════════════════════════════
-# MILESTONE 5 — Gemini AI Chat Engine & Message System
-# ═══════════════════════════════════════════════
+# ═══════════════════════════════════════
+# MILESTONE 6 — UI Polish, Animations & Final Touches
+# ═══════════════════════════════════════
 
-### 🔨 PASTE THIS INTO AI STUDIO:
-
-```
-Continuing VortexFlow AI build. This is Milestone 5: Gemini Chat Engine & Message System.
-
-Build the complete real AI chat functionality with Google Gemini streaming API, message storage in Firebase RTDB, and the full chat interface.
-
-CREATE:
-
-**`src/lib/gemini.ts` — COMPLETE IMPLEMENTATION:**
-```typescript
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-
-// System prompt for VortexFlow AI personality
-const SYSTEM_PROMPT = `You are VortexFlow AI...` // (full prompt)
-
-// Stream chat response
-export async function streamChatResponse(
-  messages: Message[],
-  model: string,
-  onChunk: (chunk: string) => void,
-  onComplete: (fullText: string) => void,
-  onError: (error: Error) => void
-): Promise<void>
-
-// Generate conversation title from first message
-export async function generateConversationTitle(firstMessage: string): Promise<string>
-
-// Count approximate tokens
-export function estimateTokens(text: string): number
-```
-
-**Components in `src/components/chat/`:**
-- `ChatWindow.tsx` — main chat area
-- `MessageList.tsx` — scrollable list of messages
-- `MessageBubble.tsx` — individual message with full markdown
-- `MessageActions.tsx` — copy, regenerate, thumbs up/down on hover
-- `StreamingMessage.tsx` — animated streaming text display
-- `TypingIndicator.tsx` — "VortexFlow is thinking..." with dots animation
-- `ChatInput.tsx` — message input bar
-- `InputToolbar.tsx` — buttons below input
-- `ChatWelcome.tsx` — empty state with prompt suggestions
-- `CodeBlock.tsx` — syntax highlighted code with copy button
-- `MessageTimestamp.tsx` — hover-reveal timestamp
-
-**CHAT CONTEXT (`src/store/ChatContext.tsx`) — FULL IMPLEMENTATION:**
-```typescript
-// State:
-- conversations: Record<string, Conversation>
-- activeConversationId: string | null
-- messages: Record<string, Message[]>  // keyed by conversationId
-- isStreaming: boolean
-- streamingContent: string  // current partial stream
-- isLoadingHistory: boolean
-- error: string | null
-
-// Actions:
-- createNewConversation()
-- selectConversation(id)
-- sendMessage(content: string)  // main send function
-- regenerateLastMessage()
-- deleteConversation(id)
-- renameConversation(id, title)
-- togglePinConversation(id)
-- clearAllConversations()
-- loadConversationMessages(id)
-```
-
-**`sendMessage` FUNCTION FLOW:**
-1. Create optimistic user message object → add to local state immediately
-2. Write user message to Firebase RTDB `/conversations/$uid/$convId/messages/$msgId`
-3. Update conversation `updatedAt` and `messageCount` in RTDB
-4. If new conversation: generate title from message using Gemini (async, update after)
-5. Start Gemini streaming call with full message history for context
-6. As chunks arrive: update `streamingContent` state in real-time
-7. On complete: write final assistant message to RTDB
-8. Update user stats: increment totalMessages in `/users/$uid/stats`
-9. On error: show error message bubble, allow retry
-
-**MESSAGE BUBBLE:**
-- User messages: right-aligned, gradient purple background, rounded pill shape
-- Assistant messages: left-aligned, dark card bg, with VortexFlow ⚡ avatar
-- Markdown rendering with `react-markdown` + `remark-gfm`:
-  * Headers, bold, italic, strikethrough
-  * Ordered/unordered lists
-  * Tables (responsive, styled)
-  * Blockquotes
-  * Inline code
-  * Code blocks with `CodeBlock.tsx`
-  * Links (open in new tab)
-- Message hover reveals action bar (copy, thumbs up, thumbs down, share)
-- Error messages: red tinted card with retry button
-- Timestamps shown on hover
-
-**CODE BLOCK COMPONENT:**
-- Language badge top-right (e.g. "python", "typescript")
-- Copy button top-right → toast "Copied!"
-- Syntax highlighting via `highlight.js` with custom dark theme
-- Line numbers (optional, toggle)
-- Max height 400px with scroll for long code
-- Filename support (parse from markdown meta)
-
-**STREAMING MESSAGE:**
-- Shows character-by-character appear animation (CSS, not JS loop)
-- Blinking cursor at end while streaming
-- Smooth scroll to bottom as content grows
-- Can't copy/interact while streaming
-
-**CHAT INPUT:**
-- Multiline textarea (auto-resize up to 200px)
-- Placeholder: "Message VortexFlow AI..."
-- Send on Enter (Shift+Enter for newline)
-- Send button (disabled when empty or streaming)
-- Character counter (show when > 500 chars, warn at 3000, limit at 4000)
-- Paste support
-- Toolbar below input:
-  * Attach file button (UI only, shows "coming soon" tooltip)
-  * Voice input button (UI only, shows "coming soon" tooltip)  
-  * Model indicator badge (clickable → model selector)
-  * "Gemini" powered by badge
-
-**CHAT WELCOME SCREEN (empty state):**
-- Large ⚡ logo with glow animation
-- "What can I help you with?" heading
-- 6 prompt suggestion cards in 2x3 grid:
-  1. "Explain quantum computing in simple terms"
-  2. "Write a Python script to sort a list"  
-  3. "Give me a recipe using chicken and pasta"
-  4. "Help me write a professional email"
-  5. "What are the best practices for React?"
-  6. "Explain the difference between TCP and UDP"
-- Click any card → populate input with that prompt
-- Fade-in stagger animation
-
-**SCROLL BEHAVIOR:**
-- Auto-scroll to bottom on new messages
-- Show "scroll to bottom" floating button when user has scrolled up
-- Smooth scroll animation
-- Don't auto-scroll if user is reading old messages (detect with scroll position)
-
-**FIREBASE RTDB REAL-TIME:**
-- Listen to messages for active conversation in real-time
-- Use Firebase `onChildAdded` for efficient message loading
-- Paginate older messages: load last 50, "Load more" button for older
-- Unsubscribe on conversation change
-
-Show ALL files completely. Do not truncate.
-```
-
----
-
-# ═══════════════════════════════════════════════
-# MILESTONE 6 — All Modals System
-# ═══════════════════════════════════════════════
-
-### 🔨 PASTE THIS INTO AI STUDIO:
+## 🎯 PASTE THIS AS YOUR MILESTONE 6 PROMPT:
 
 ```
-Continuing VortexFlow AI build. This is Milestone 6: Complete Modals System.
+Continue building "VortexFlow AI". This is Milestone 6. Milestones 1-5 complete.
 
-Build all application modals with a professional modal infrastructure and animations.
+TASK: Final UI polish, micro-animations, performance optimizations, PWA setup, error boundaries, and production readiness.
 
-CREATE:
+─────────────────────────────────────────
+ITEMS TO BUILD/POLISH:
 
-**Modal Infrastructure:**
-- `src/components/modals/ModalPortal.tsx` — React Portal to document.body
-- `src/components/modals/ModalOverlay.tsx` — animated backdrop with blur
-- `src/components/modals/BaseModal.tsx` — base modal wrapper with animations
-- `src/components/modals/ModalManager.tsx` — renders correct modal based on UIContext
-- `src/components/ui/Modal.tsx` — reusable modal primitive
+1. LOADING STATES (comprehensive):
+   - Full-page loader (logo animation) during auth check
+   - Skeleton loaders: sidebar chat list, message area, profile
+   - Inline spinners: buttons, model picker
+   - Progress bar (top of page): Framer Motion, cyan gradient, appears during navigation
 
-**MODAL TYPES ENUM (`src/types/index.ts` addition):**
-```typescript
-export enum ModalType {
-  SETTINGS = "settings",
-  PROFILE = "profile",
-  KEYBOARD_SHORTCUTS = "keyboard_shortcuts",
-  SHARE_CHAT = "share_chat",
-  DELETE_CONVERSATION = "delete_conversation",
-  CLEAR_ALL_CHATS = "clear_all_chats",
-  EXPORT_CHAT = "export_chat",
-  FEEDBACK = "feedback",
-  ABOUT = "about",
-  NEW_CHAT_CONFIRM = "new_chat_confirm",
-  RENAME_CONVERSATION = "rename_conversation",
-}
+2. ERROR BOUNDARIES:
+   src/components/ErrorBoundary.tsx:
+   - Catches React render errors
+   - Friendly error UI: "Something went wrong" with VortexFlow branding
+   - "Reload page" + "Go to home" buttons
+   - Error details (collapsed, dev mode only)
+   - Wraps: ChatWindow, Sidebar, each Modal
+
+3. EMPTY STATES (beautiful illustrations using CSS/SVG):
+   - No chats yet (sidebar)
+   - No search results
+   - Chat load error
+   - Network offline
+   Each: relevant FA icon (large, gradient), headline, sub-text, optional CTA
+
+4. NOTIFICATION SYSTEM (polish):
+   - Toast stack: max 3 visible, oldest auto-dismiss
+   - Notification centre dropdown (bell icon in Navbar):
+     - Shows app-level notifications (welcome message, tips)
+     - "No new notifications" empty state
+     - Mark all read
+
+5. ANIMATIONS (micro-interactions):
+   - Send button: ripple effect on click
+   - New chat created: sidebar item slides in from top
+   - Chat deleted: item slides out + fades
+   - Modal open: scale 0.95→1 + fade, close: reverse
+   - Sidebar collapse: width transition 260→0, icon-only at 60px
+   - Message appear: fade + translate-y: 8px→0
+   - Streaming cursor: blinking underscore (CSS blink animation)
+   - Logo glow pulse: continuous subtle animation
+   - Page transitions (React Router): fade + slight upward movement
+
+6. KEYBOARD NAVIGATION:
+   - Full keyboard accessibility
+   - Focus visible outlines (brand cyan, 2px)
+   - Tab order: Sidebar new chat → chat list → main input → send
+   - Arrow keys navigate chat list in sidebar
+   - Enter opens selected chat
+
+7. PWA SETUP:
+   - vite.config.ts: vite-plugin-pwa
+   - manifest.json: name, icons, theme_color (#0A0A0F), background_color, display: standalone
+   - Service worker: cache shell (offline support for app UI)
+   - "Install app" prompt (beforeinstallprompt event) → custom install banner
+
+8. SEO & META:
+   - index.html: OG tags, Twitter card tags, description for VortexFlow AI
+   - Favicon (use logo.svg reference)
+   - robots.txt (allow all except /chat/*)
+   - Proper page titles per route (React Helmet or document.title)
+
+9. PERFORMANCE:
+   - React.lazy() + Suspense for: AuthPage, ChatPage, all Modals
+   - Image optimization: lazy loading, proper alt texts
+   - Bundle analysis: vite-bundle-visualizer (dev only)
+   - Memoization: React.memo on MessageBubble, SidebarChatItem
+   - useMemo: filtered/grouped chat lists
+   - useCallback: all event handlers in hooks
+
+10. ACCESSIBILITY (a11y):
+    - ARIA labels on all icon buttons
+    - role="dialog" + aria-modal on all modals
+    - aria-live="polite" on streaming message area
+    - Color contrast: all text meets WCAG AA minimum
+    - Screen reader: meaningful alt texts, button labels
+
+11. RESPONSIVE DESIGN FINAL PASS:
+    - Mobile (<768px): 
+      - Sidebar: hidden, opens as full overlay with backdrop
+      - Input bar: larger touch targets
+      - Modals: bottom sheet style (slides up)
+      - Chat bubbles: full width
+    - Tablet (768-1024px):
+      - Sidebar: icon-only by default (60px)
+      - Modals: centered, max 90vw
+    - Desktop (>1024px):
+      - Full sidebar
+      - Wide modals
+
+12. RATE LIMITING UI:
+    - Track messages per session (Zustand)
+    - Free plan: show "X / 50 messages used today" in sidebar bottom
+    - Warning at 40: amber toast "You're approaching your daily limit"
+    - At 50: error state on input "Daily limit reached. Limit resets at midnight."
+    - (Not actually enforced via server — UI only, honesty note in FAQ)
+
+13. CHANGELOG / WHATS NEW:
+    src/components/modals/ChangelogModal.tsx:
+    - Triggered from Navbar "What's New" badge (if unseen)
+    - Version list with date, emoji, and description
+    - Tracks last-seen version in RTDB
+
+14. FINAL POLISH ITEMS:
+    - Smooth scrollbar (thin, brand coloured, only visible on hover)
+    - Focus mode: Ctrl+Shift+F hides sidebar + header for distraction-free chat
+    - Print styles: @media print — clean message list, no UI chrome
+    - 404 page: branded "Page not found" with nav home button
+    - Consistent border-radius tokens throughout (sm: 6px, md: 10px, lg: 16px, xl: 24px)
+    - All FA icons consistent size (fa-sm, fa-lg as appropriate)
+    - Hover states on every interactive element (no bare clickables)
+    - Selection colour: brand cyan (::selection CSS)
+
+─────────────────────────────────────────
+ENV VARIABLES DOCUMENTATION:
+Create .env.example file:
 ```
-
-**1. SETTINGS MODAL (`SettingsModal.tsx`):**
-Tabbed modal with 4 tabs:
-- **Appearance Tab:**
-  * Theme selector: Dark / Light / System (3 visual cards with preview)
-  * Font size: Small / Medium / Large (preview text updates live)
-  * Sidebar default state: Open / Closed
-  * Code theme: Dark / Light
-- **AI & Chat Tab:**
-  * Model selector with descriptions (Gemini Flash vs Pro)
-  * Streaming toggle (on/off with description)
-  * System prompt viewer (show current, not editable in free tier)
-  * Max context messages slider (5-50, default 20)
-- **Notifications Tab:**
-  * Sound effects toggle
-  * Browser notifications toggle (request permission if enabled)
-- **Data & Privacy Tab:**
-  * "Export All Data" button → downloads JSON of all conversations
-  * "Clear All Chats" button → opens Clear All Chats modal
-  * "Delete Account" button (red, destructive) → confirmation
-  * Data storage info text
-All settings saved to Firebase RTDB `/users/$uid/preferences` in real-time
-
-**2. PROFILE MODAL (`ProfileModal.tsx`):**
-- User avatar: large circle with initials/photo + edit button overlay
-- Avatar upload: click to select image (convert to base64, store in RTDB — max 200KB)
-- Fields:
-  * Display Name (editable, with character count 2-50)
-  * Email (read-only, shown with lock icon)
-  * Bio (textarea, max 200 chars, optional)
-- Auth provider badge: "Email/Password" or "Google Account" 
-- Account stats:
-  * Member since: formatted date
-  * Total conversations
-  * Total messages sent
-- Save button + Cancel button
-- Dirty state detection: Save button only enabled when changes made
-- Optimistic update + Firebase sync
-
-**3. KEYBOARD SHORTCUTS MODAL (`KeyboardShortcutsModal.tsx`):**
-- Clean table layout with two columns: Action | Shortcut
-- Sections:
-  * Navigation: New Chat (Ctrl+K), Toggle Sidebar (Ctrl+B), Search Chats (Ctrl+/)
-  * Chat: Send Message (Enter), New Line (Shift+Enter), Regenerate (Ctrl+R)
-  * App: Settings (Ctrl+,), Close Modal (Esc)
-- Keyboard key badges styled like real keys (border, shadow, monospace)
-- Search/filter shortcuts input
-- "macOS" / "Windows" toggle (shows ⌘ vs Ctrl)
-
-**4. SHARE CHAT MODAL (`ShareChatModal.tsx`):**
-- Current conversation share options:
-  * Copy shareable link (generates a pseudo-link like `vortexflow.ai/share/[id]` — just copies to clipboard, not actually functional)
-  * Copy conversation as text
-  * Copy as markdown
-- Preview pane showing what will be copied
-- Toast on copy: "Copied to clipboard!"
-- Info note: "Links are view-only snapshots"
-
-**5. DELETE CONVERSATION MODAL (`DeleteConversationModal.tsx`):**
-- Shows conversation title in warning message
-- Warning icon (triangle)
-- Message: "Are you sure you want to delete '[title]'? This action cannot be undone."
-- Two buttons: Cancel (ghost) + Delete (red destructive)
-- Deletes from Firebase RTDB and local state
-- Redirects to most recent conversation or empty state
-
-**6. CLEAR ALL CHATS MODAL (`ClearAllChatsModal.tsx`):**
-- Destructive confirmation modal
-- Requires typing "DELETE" in input to confirm
-- Progress bar filling as user types
-- Big warning: "This will permanently delete all X conversations"
-- Confirm button only enabled when input matches "DELETE"
-- Shows spinner while clearing
-- Success toast + redirects to new empty state
-
-**7. EXPORT CHAT MODAL (`ExportChatModal.tsx`):**
-- Export current conversation
-- Format options as cards:
-  * JSON — "Full data with metadata" 
-  * Markdown — "Formatted for reading"
-  * Plain Text — "Simple text file"
-- Preview pane (small, scrollable) showing first ~10 lines
-- Filename input (pre-filled with conversation title + date)
-- Download button — triggers actual file download
-- Export logic from `src/utils/exportChat.ts`
-
-**8. FEEDBACK MODAL (`FeedbackModal.tsx`):**
-- "Help us improve VortexFlow AI"
-- Type selector: Bug Report / Feature Request / General Feedback
-- Rating: 1-5 stars (animated hover)
-- Message textarea (min 20 chars)
-- Email field (pre-filled from auth, optional)
-- Submit → write to Firebase RTDB `/feedback/$pushId`
-- Thank you animation on submit
-
-**9. ABOUT MODAL (`AboutModal.tsx`):**
-- VortexFlow AI logo + version (v1.0.0)
-- "Built with" technology badges: React, TypeScript, Firebase, Gemini API, Tailwind
-- Short mission statement
-- Links: GitHub (placeholder), Documentation (placeholder)
-- Open source badge
-- "Made with ❤️ and ⚡" tagline
-
-**10. RENAME CONVERSATION MODAL (`RenameConversationModal.tsx`):**
-- Simple modal: current title pre-filled in input
-- Character count (max 100)
-- Save / Cancel buttons
-- Auto-select text on open
-- Save on Enter
-
-**BASE MODAL REQUIREMENTS:**
-- Framer Motion: scale+fade in, scale+fade out
-- Click outside to close
-- Escape key to close
-- Trap focus within modal (accessibility)
-- Prevent body scroll when open
-- Max-width varies by modal: sm (400px), md (560px), lg (720px)
-- Dark glassmorphism style: bg-[#1A1A26]/95 backdrop-blur-xl border border-white/10
-- Header with title + X close button
-- Scrollable body for long content
-- Footer with action buttons
-
-Show ALL modal files completely. Do not truncate.
-```
-
----
-
-# ═══════════════════════════════════════════════
-# MILESTONE 7 — UI Component Library
-# ═══════════════════════════════════════════════
-
-### 🔨 PASTE THIS INTO AI STUDIO:
-
-```
-Continuing VortexFlow AI build. This is Milestone 7: Reusable UI Component Library.
-
-Build all shared UI components used throughout VortexFlow AI.
-
-CREATE ALL components in `src/components/ui/`:
-
-**1. Button.tsx**
-- Variants: primary (gradient), secondary (ghost), outline, destructive, ghost, link
-- Sizes: xs, sm, md, lg, xl
-- States: loading (spinner), disabled, active
-- Icon support: left icon, right icon, icon-only
-- Full TypeScript props extending HTMLButtonElement
-- Ripple effect animation on click
-
-**2. Input.tsx**
-- Variants: default, filled, outline
-- States: error, success, disabled, loading
-- Left/right icon slots
-- Label, helper text, error message
-- Character count support
-- Password toggle built-in option
-- Floating label animation
-
-**3. Textarea.tsx**
-- Auto-resize (min/max rows)
-- Character count
-- Same styling system as Input
-
-**4. Badge.tsx**
-- Variants: default, primary, success, warning, error, outline
-- Sizes: xs, sm, md
-- Dot indicator option
-- Removable (X button)
-
-**5. Avatar.tsx**
-- Image with fallback to initials
-- Sizes: xs(24px), sm(32px), md(40px), lg(56px), xl(80px)
-- Status indicator dot (online, away, offline)
-- Ring variants
-
-**6. Tooltip.tsx**
-- Hover/focus triggered
-- Positions: top, bottom, left, right, auto
-- Delay option (default 500ms)
-- Max width option
-- Arrow pointer
-- Portal-based rendering
-
-**7. Dropdown.tsx**
-- Trigger + content pattern
-- Positions: bottom-start, bottom-end, top-start, top-end
-- Click outside to close
-- Keyboard navigation (arrow keys, Enter, Esc)
-- Item variants: default, danger, disabled, separator, label
-- Icon support per item
-- Animation: scale + fade
-
-**8. Switch.tsx**
-- Animated toggle
-- Sizes: sm, md, lg
-- Label + description option
-- Controlled + uncontrolled modes
-
-**9. Slider.tsx**
-- Range slider with custom thumb
-- Value display
-- Min/max/step
-- Marks/ticks option
-
-**10. Tabs.tsx**
-- Underline, pill, card variants
-- Animated active indicator
-- Keyboard navigation
-- Lazy rendering of tab content
-
-**11. Skeleton.tsx**
-- Line skeleton
-- Circle skeleton
-- Card skeleton
-- Pulse animation
-- Shimmer animation variant
-
-**12. Spinner.tsx**
-- Sizes: xs, sm, md, lg
-- Colors: inherit, primary, white
-- Pulse variant
-
-**13. Toast System (`src/components/ui/Toast.tsx` + `src/lib/toast.ts`):**
-- Types: success, error, warning, info, loading
-- Position: top-right (default), configurable
-- Auto-dismiss (3000ms default, configurable)
-- Manual dismiss X button
-- Progress bar showing time remaining
-- Stacking with limit (max 4 visible)
-- API: `toast.success("msg")`, `toast.error("msg")`, `toast.loading("msg")`, `toast.dismiss(id)`
-- Pause on hover
-- Entrance/exit animations (slide in from right)
-
-**14. EmptyState.tsx**
-- Icon/illustration slot
-- Title + description
-- Action button slot
-- Various preset empties: no-chats, no-results, error-state
-
-**15. Divider.tsx**
-- Horizontal/vertical
-- With optional label in center
-
-**16. Kbd.tsx** (keyboard key display)
-- Styled as physical key
-- Single key or combination
-
-**17. CopyButton.tsx**
-- Copy text to clipboard
-- Animated check state after copy
-- Tooltip "Copy" → "Copied!"
-
-**18. ScrollArea.tsx**
-- Custom scrollbar styling
-- Overflow auto with padding compensation
-- Ref forwarding for scroll control
-
-**19. ContextMenu.tsx**
-- Right-click triggered
-- Portal-based
-- Same item API as Dropdown
-- Position aware (stays in viewport)
-
-**20. Popover.tsx**
-- Click triggered floating content
-- Arrow
-- Close on outside click
-- Used for user menu, model selector
-
-**DESIGN SYSTEM TOKENS in component props:**
-All components use the brand color system:
-- Primary: violet/purple gradient
-- Success: emerald
-- Warning: amber  
-- Error: red
-- Info: blue
-
-Show ALL component files with full implementation. Do not truncate.
-```
-
----
-
-# ═══════════════════════════════════════════════
-# MILESTONE 8 — Theme System, Keyboard Shortcuts & Accessibility
-# ═══════════════════════════════════════════════
-
-### 🔨 PASTE THIS INTO AI STUDIO:
-
-```
-Continuing VortexFlow AI build. This is Milestone 8: Theme System, Keyboard Shortcuts & Accessibility.
-
-BUILD:
-
-**1. Complete Theme System (`src/store/ThemeContext.tsx` + `src/hooks/useTheme.ts`):**
-- Themes: "dark" | "light" | "system"
-- System theme: uses `prefers-color-scheme` media query + listener
-- Theme class applied to `<html>` element: "dark" or "light"
-- Persisted in:
-  * Firebase RTDB `/users/$uid/preferences/theme` (for authenticated users)
-  * localStorage `vortexflow-theme` (fallback/unauthenticated)
-- Smooth transition between themes: `transition-colors duration-300`
-- No flash on initial load: inline script in index.html to set class before React mounts
-- All Tailwind classes use dark: prefix properly
-
-**Light Theme CSS Variables (`src/index.css`):**
-```css
-:root {
-  --bg-primary: #F8F7FF;
-  --bg-surface: #FFFFFF;
-  --bg-card: #F0EEFF;
-  --border: #E2DEFF;
-  --text-primary: #1A1530;
-  --text-secondary: #6B5FA0;
-  --text-muted: #9B97B0;
-}
-.dark {
-  --bg-primary: #0A0A0F;
-  --bg-surface: #111118;
-  --bg-card: #1A1A26;
-  --border: #2A2A3A;
-  --text-primary: #F0EDFF;
-  --text-secondary: #C4BFDF;
-  --text-muted: #6B6880;
-}
-```
-
-**2. Keyboard Shortcuts System (`src/hooks/useKeyboard.ts`):**
-Global keyboard shortcut handler:
-- `Ctrl+K` / `Cmd+K` → New Chat
-- `Ctrl+B` / `Cmd+B` → Toggle Sidebar
-- `Ctrl+/` / `Cmd+/` → Focus search
-- `Ctrl+,` / `Cmd+,` → Open Settings modal
-- `Ctrl+R` / `Cmd+R` → Regenerate last message
-- `Ctrl+Shift+C` → Copy last message
-- `Escape` → Close modal / clear search
-- `Ctrl+Enter` → Force send message
-- `Up Arrow` in empty input → Edit last user message
-- Register/unregister system so components can add their own shortcuts
-- Shortcut blocked when: typing in input (except app-level), modal open (only Esc works)
-- Visual feedback: flash effect on triggered action
-
-**3. Font Size System:**
-- Small: base text 13px, code 12px
-- Medium: base text 15px, code 13px (default)
-- Large: base text 17px, code 15px
-- Applied via class on root element: `text-size-sm`, `text-size-md`, `text-size-lg`
-- CSS custom property `--font-size-base` used in components
-- Saved to Firebase preferences
-
-**4. Accessibility (a11y) Improvements:**
-- All interactive elements have proper `aria-label`
-- Focus visible styles on all focusable elements (3px purple outline)
-- Skip to main content link (visible on Tab press)
-- Proper heading hierarchy (h1 > h2 > h3)
-- Color contrast ratios pass WCAG AA
-- All modals: role="dialog", aria-modal, aria-labelledby, aria-describedby
-- Toast notifications: aria-live="polite" region
-- Loading states: aria-busy, aria-label="Loading..."
-- Image alt texts on all images/avatars
-- Keyboard navigation for: sidebar list (arrow keys), dropdown menus, tab panels
-- Screen reader announcements for: new message received, streaming complete, errors
-
-**5. Smooth Page Transitions (`src/components/routing/PageTransition.tsx`):**
-- Wrap page components with Framer Motion
-- Route change: fade out old page, fade in new page
-- No layout shift during transition
-
-**6. Micro-interactions & Polish:**
-- New chat button: hover sparkle particle burst (CSS only)
-- Send button: elastic scale on click
-- Message bubble: appears with slide-up animation
-- Sidebar item: hover slides right 2px
-- Copy button: success state with bouncing checkmark
-- Toggle switches: smooth slide with spring physics
-- Modal backdrop: blur and dim animate in sync
-
-**7. Error Boundaries (`src/components/error/`):**
-- `ErrorBoundary.tsx` — catches render errors, shows friendly error UI
-- `ChatErrorBoundary.tsx` — chat-specific error with retry
-- `RouteErrorBoundary.tsx` — route-level error with navigation back
-- Error UI: shows "Something went wrong" with ⚡ broken logo, refresh button
-
-**8. Performance Optimizations:**
-- All page components: `React.lazy` + `Suspense` with skeleton loaders
-- Heavy components memoized with `React.memo`
-- Expensive computations wrapped in `useMemo`
-- Event handlers in `useCallback`
-- Images lazy loaded
-- Firebase listeners properly cleaned up
-- Debounced search (300ms)
-- Throttled scroll handlers (16ms)
-
-**9. 404 Page (`src/pages/NotFoundPage.tsx`):**
-- Large "404" with glitch animation
-- "Page not found" message
-- "The page you're looking for doesn't exist in this dimension."
-- "Go Home" and "Open Chat" buttons
-- Animated floating ⚡ particles background
-
-Show ALL files completely. Do not truncate.
-```
-
----
-
-# ═══════════════════════════════════════════════
-# MILESTONE 9 — Chat Features: Search, Export, Regenerate, Edit
-# ═══════════════════════════════════════════════
-
-### 🔨 PASTE THIS INTO AI STUDIO:
-
-```
-Continuing VortexFlow AI build. This is Milestone 9: Advanced Chat Features.
-
-BUILD all advanced chat functionality:
-
-**1. Message Search (`src/components/chat/MessageSearch.tsx`):**
-- Search within current conversation
-- Highlight matching text in messages
-- Navigate between results (up/down arrows)
-- Result count: "3 of 12 matches"
-- Triggered by Ctrl+F within chat window
-- Animated slide-down from header
-- Close on Escape
-
-**2. Regenerate Response:**
-- "Regenerate" button on last assistant message
-- Re-sends last user message to Gemini
-- Replaces last assistant message (not appends)
-- Shows loading state while streaming
-- Toast: "Regenerating response..."
-- Update in Firebase RTDB
-
-**3. Edit User Message:**
-- Click edit icon on user message → inline edit mode
-- Textarea replaces message bubble with original content
-- Save / Cancel buttons
-- On save: deletes all messages after edited message, re-sends to Gemini
-- Firebase: delete subsequent messages, update edited message
-- Warning: "Editing this message will remove all subsequent messages"
-
-**4. Message Actions Bar (hover):**
-Per message on hover:
-- User messages: Copy, Edit, Delete
-- Assistant messages: Copy, Regenerate (last only), Thumbs Up, Thumbs Down, Share
-- Thumbs up/down: saves to RTDB `/conversations/$uid/$convId/messages/$msgId/feedback`
-- Delete message: removes from RTDB + local state (with confirmation toast)
-- Actions animate in with stagger
-
-**5. Global Chat Search (`src/components/sidebar/GlobalSearch.tsx`):**
-- Search across all conversations by title AND message content
-- Triggered by Ctrl+/ or clicking search bar
-- Full-screen overlay search panel
-- Shows conversation results grouped:
-  * "Title matches" (search in titles)
-  * "Message matches" (search in content, shows excerpt)
-- Click result → navigate to conversation, scroll to message
-- Recent searches (last 5, stored in localStorage)
-- Keyboard navigation through results
-- Debounced 300ms
-
-**6. Message Timestamps:**
-- Show relative time on hover ("2 minutes ago", "Yesterday at 3:45 PM")
-- Tooltip with absolute timestamp
-- Group messages by time: show time separator if > 10 min gap between messages
-
-**7. Conversation Auto-Title Generation:**
-- When creating new conversation, title = "New Chat"
-- After first user message sent + AI responds:
-  * Call Gemini with prompt: "Generate a short 3-6 word title for a conversation that starts with: [message]. Return ONLY the title, nothing else."
-  * Update conversation title in RTDB
-  * Animate title update in sidebar
-
-**8. Message Streaming Polish:**
-- Smooth character-by-character render (no jitter)
-- Typing cursor blinks at insertion point
-- Markdown renders progressively (headings, bullets appear as they stream)
-- Code blocks appear when ``` fence is closed
-- Scroll follows content smoothly
-- Stop streaming button (X) in input area while streaming
-  * Cancels fetch, saves partial response to RTDB
-
-**9. Chat Context Window Management:**
-- Show token usage indicator in header: "2.4K / 32K tokens"
-- When approaching limit: yellow warning "Approaching context limit"
-- At limit: auto-summarize oldest messages or show warning
-- Settings: max context messages slider (5-50)
-- Trim old messages from Gemini API call (not from RTDB, just from context sent)
-
-**10. Quick Actions in Chat:**
-- `/` command menu in input:
-  * Type "/" → shows floating menu above input
-  * Options: /new (new chat), /clear (clear current), /export (export chat), /model (switch model)
-  * Arrow key navigation, Enter to select, Esc to close
-  * Animated slide-up menu
-
-**11. Pinned Messages:**
-- Pin any message (right-click → pin)
-- Pinned messages panel: collapsible section at top of chat
-- Store in RTDB: `/conversations/$uid/$convId/messages/$msgId/isPinned: true`
-- Click pinned message → scroll to it
-
-**12. Copy Code & Share Improvements:**
-- Copy entire conversation as formatted markdown
-- Copy single message
-- All copy operations use Clipboard API with fallback
-- Success feedback: button turns green with checkmark for 2s
-
-Show ALL files completely. Do not truncate.
-```
-
----
-
-# ═══════════════════════════════════════════════
-# MILESTONE 10 — Final Polish, Animations & Production Build
-# ═══════════════════════════════════════════════
-
-### 🔨 PASTE THIS INTO AI STUDIO:
-
-```
-Continuing VortexFlow AI build. This is Milestone 10: Final Polish, Animations & Production Readiness.
-
-BUILD the final layer of polish and complete all remaining pieces:
-
-**1. Loading Experience (`src/components/ui/AppLoader.tsx`):**
-- Full-screen loader shown while Firebase initializes auth
-- Animated VortexFlow ⚡ logo with:
-  * Rotating outer ring (gradient arc)
-  * Pulsing center icon
-  * "VortexFlow AI" text fades in below
-  * Subtitle: "Initializing..." → "Loading your workspace..." → "Almost ready..."
-- Progress indicator
-- Minimum display time: 1.5s (avoid flash)
-
-**2. Onboarding Flow (`src/components/onboarding/`):**
-First-time user experience after signup:
-- `OnboardingModal.tsx` — multi-step modal (3 steps):
-  * Step 1: Welcome + name display, "Let's set up your experience"
-  * Step 2: Theme selection (Dark/Light) with live preview
-  * Step 3: Model selection (Flash vs Pro) with description
-- Progress dots at bottom
-- Skip option
-- Finish → writes preferences to RTDB, shows welcome toast
-- Never shown again (track in RTDB `/users/$uid/onboardingComplete: true`)
-
-**3. Network Status Banner (`src/components/ui/NetworkStatus.tsx`):**
-- Listen to `online`/`offline` events
-- When offline: yellow banner at top "⚠️ You're offline. Messages will send when reconnected."
-- When reconnects: green banner "✅ Back online!" → auto-dismiss after 3s
-- Firebase RTDB automatically retries when back online
-- Slide-down animation
-
-**4. User Menu Dropdown (complete implementation):**
-Clicking user avatar in header shows popover:
-- User info: avatar, name, email
-- Divider
-- Menu items with icons:
-  * 👤 Profile (opens Profile modal)
-  * ⚙️ Settings (opens Settings modal)
-  * ⌨️ Keyboard Shortcuts (opens Shortcuts modal)
-  * 📤 Export Data (downloads all data as JSON)
-  * 💬 Send Feedback (opens Feedback modal)
-  * ℹ️ About VortexFlow (opens About modal)
-- Divider
-- 🚪 Sign Out (with confirmation)
-- Smooth Framer Motion animation
-
-**5. Empty States Polish:**
-- New user first visit: animated hero in chat area
-  * "Welcome to VortexFlow AI, [Name]! 👋"
-  * 3 starter prompts as animated cards
-- No conversations in sidebar: illustration + "Start your first conversation"
-- All empty states have consistent spacing, icon size, typography
-
-**6. Error Handling Polish:**
-- Firebase connection errors: specific messages
-- Gemini API errors:
-  * Rate limit: "You've sent too many messages. Please wait a moment."
-  * Network error: "Couldn't reach AI. Check your connection."
-  * Content filter: "This message was flagged. Please rephrase."
-  * Generic: "Something went wrong. Please try again."
-- Auth errors mapped to friendly messages:
-  * wrong-password → "Incorrect password. Please try again."
-  * user-not-found → "No account found with this email."
-  * email-already-in-use → "An account with this email already exists."
-  * network-request-failed → "Network error. Check your connection."
-
-**7. Responsive Chat Layout Polish:**
-- Mobile (< 640px):
-  * Sidebar hidden, hamburger menu
-  * Full-width messages
-  * Input bar fixed to bottom with safe area inset
-  * Header compact (just toggle + title + user avatar)
-  * Touch-friendly tap targets (min 44x44px)
-- Tablet (640px-1024px):
-  * Sidebar collapsible
-  * Slightly narrower message bubbles
-- Desktop (> 1024px):
-  * Full sidebar
-  * Max message width 70% for readability
-
-**8. Performance Audit & Fixes:**
-- Bundle size optimization: check for duplicate dependencies
-- Code splitting: each page/modal is its own chunk
-- Firebase listeners audit: verify all unsubscribed on unmount
-- Memory leak check: all timers/intervals cleared
-- Image optimization: avatar stored as base64 compressed
-
-**9. Environment Variables & Config:**
-Create `.env.example`:
-```env
 VITE_FIREBASE_API_KEY=
 VITE_FIREBASE_AUTH_DOMAIN=
 VITE_FIREBASE_DATABASE_URL=
@@ -1398,21 +1025,16 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=
 VITE_FIREBASE_APP_ID=
 VITE_GEMINI_API_KEY=
 ```
-Create `src/config/env.ts` — typed env variable access with validation
 
-**10. README.md:**
-Complete setup guide:
-- Project overview with screenshot placeholder
-- Features list
-- Prerequisites
-- Firebase setup steps (create project, enable Auth methods, RTDB rules)
-- Getting API keys (Firebase + Gemini)
-- Installation steps
-- Environment variable setup
-- Running locally
-- Build for production
-- Firebase Hosting deployment steps
-- RTDB Security Rules (provided, paste into Firebase Console):
+Also create README.md with:
+- Project overview
+- Setup instructions (clone, install, env setup, firebase setup, run)
+- Firebase RTDB rules snippet
+- Deployment guide (Vercel/Netlify)
+- Contributing guide placeholder
+
+─────────────────────────────────────────
+FIREBASE RTDB SECURITY RULES (include in README):
 ```json
 {
   "rules": {
@@ -1422,88 +1044,104 @@ Complete setup guide:
         ".write": "$uid === auth.uid"
       }
     },
-    "conversations": {
+    "chats": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "messages": {
       "$uid": {
         ".read": "$uid === auth.uid",
         ".write": "$uid === auth.uid"
       }
     },
     "feedback": {
-      ".write": "auth !== null",
-      ".read": false
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "shared": {
+      ".read": true,
+      "$shareId": {
+        ".write": "auth !== null"
+      }
     }
   }
 }
 ```
 
-**11. Final App.tsx — Complete Router:**
-```typescript
-// All routes:
-/ → LandingPage (PublicRoute)
-/login → LoginPage (PublicRoute)
-/signup → SignupPage (PublicRoute)
-/forgot-password → ForgotPasswordPage (PublicRoute)
-/chat → ChatPage (ProtectedRoute)
-/chat/:conversationId → ChatPage (ProtectedRoute)
-* → NotFoundPage
-```
-
-**12. PWA Manifest (`public/manifest.json`):**
-- App name, short name, icons, theme colors
-- Display: standalone
-- Start URL: /chat
-- Background color matching brand
-
-**13. Meta Tags & SEO (`index.html` final):**
-- Title: "VortexFlow AI — Your Professional AI Assistant"
-- Description meta
-- Open Graph tags (og:title, og:description, og:image placeholder)
-- Twitter Card tags
-- Theme color meta
-- Viewport meta (with viewport-fit=cover for iPhone notch)
-
-**14. Final Touches:**
-- Favicon: SVG ⚡ in brand purple
-- Console.log suppressed in production
-- Global error handler: uncaught promise rejections logged
-- Version display in About modal and footer: `v1.0.0`
-- Smooth page title updates: "[Chat Title] — VortexFlow AI"
-
-Show ALL files completely. Final milestone — ensure everything integrates perfectly. Do not truncate.
+No pink/violet-pink. TypeScript strict. This is the final milestone — make it production-ready and perfect.
+Build all specified files completely.
 ```
 
 ---
 
-## 📋 POST-BUILD CHECKLIST
+---
 
-After completing all milestones, verify:
+# 📋 MILESTONE SUMMARY TABLE
 
-- [ ] Firebase Auth works (email + Google)
-- [ ] New user created in RTDB on signup
-- [ ] Conversations save and load in real-time
-- [ ] Gemini streaming works with correct API key
-- [ ] All 10+ modals open/close correctly
-- [ ] Theme switching works (dark/light/system)
-- [ ] All keyboard shortcuts functional
-- [ ] Export chat downloads file correctly
-- [ ] Mobile responsive on all breakpoints
-- [ ] No console errors in production build
-- [ ] `npm run build` completes without TypeScript errors
-- [ ] Firebase RTDB security rules deployed
+| Milestone | Focus | Key Deliverables |
+|-----------|-------|-----------------|
+| **M1** | Foundation + Landing | Project setup, design system, full landing page |
+| **M2** | Authentication | Firebase Auth, Email+Google login, Auth UI |
+| **M3** | Core Chat | Gemini API, RTDB, Sidebar, Chat Window, Streaming |
+| **M4** | Modals & Settings | 8 modals, settings system, keyboard shortcuts |
+| **M5** | Advanced Features | Edit/regen messages, search, image input, export |
+| **M6** | Polish & Production | Animations, PWA, a11y, performance, README |
 
 ---
 
-## 🚀 DEPLOY TO FIREBASE HOSTING
+# 🖼️ LOGO PLACEMENT GUIDE
 
-```bash
-npm install -g firebase-tools
-firebase login
-firebase init hosting
-npm run build
-firebase deploy
+When you receive your AI-generated `logo.svg`:
+
+1. In **AI Studio Build**, go to the **Files** panel (left sidebar)
+2. Upload `logo.svg` to the `public/` folder
+3. The app references it as `src="/logo.svg"` — it will appear automatically
+
+The logo will be used in:
+- Navbar (with animated glow pulse)
+- Landing Page hero
+- Auth page left panel
+- Chat welcome screen
+- Loading screen
+- PWA icon (manifest)
+
+---
+
+# ✨ LOGO DESIGN PROMPT (For Separate AI Image/SVG Generator)
+
+Use this prompt in an AI vector/SVG generator (e.g., Recraft AI, Adobe Firefly Vector, or ChatGPT image → trace to SVG):
+
+```
+Design a minimalist, modern logo for "VortexFlow AI".
+
+Concept: Abstract vortex/spiral that transitions into a flowing data stream or neural connection. The spiral should feel like a whirlpool of intelligence — dynamic, elegant, and technological.
+
+Style:
+- Minimalist geometric — works at 16px favicon and 200px display
+- Single shape or 2-3 interlocking elements max
+- NO text in the logo mark (icon only)
+- Monochrome base design that looks great filled with gradient
+
+Colour (when exported as SVG with gradient):
+- Primary gradient: #00D4FF (electric cyan) → #7B61FF (deep indigo)
+- Flow: left-to-right or top-to-bottom linear gradient
+- Background: transparent
+
+Animation (the SVG will have CSS animation applied):
+- The vortex spiral arms will have a slow continuous rotation (360deg, 8s, linear, infinite)
+- Subtle opacity pulse on the outer ring (0.7 → 1.0, 3s ease-in-out, alternate infinite)
+- On hover: rotation speeds up (3s), glow filter applied (drop-shadow cyan)
+
+Format: SVG, clean paths, no raster elements, viewBox="0 0 64 64"
+
+The result should feel: premium, intelligent, slightly futuristic — similar in quality to Anthropic's or OpenAI's logo aesthetic but with a vortex/flow theme.
 ```
 
 ---
 
-*VortexFlow AI — Built with React + TypeScript + Vite + Firebase + Google Gemini*  
-*Roadmap Version: 1.0 | Total Milestones: 10 | Estimated Lines: 8000+*
+*VortexFlow AI — Roadmap-Prompt.md — v1.0*
+*Total Milestones: 6 | Stack: React + TS + Vite + Firebase + Gemini*
