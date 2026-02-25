@@ -20,6 +20,7 @@ An Akinator-style AI that guesses countries through yes/no questions using a Bay
 ├── .github
 │   └── workflows
 │       └── update-readme-structure.yml
+├── A.md
 ├── Chessmate Data Prep.ipynb.md
 ├── Chessmate_v2_DataPrep.ipynb.md
 ├── Chessmate_v2_ResNet_Training.ipynb.md
